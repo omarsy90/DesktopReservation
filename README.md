@@ -85,3 +85,7 @@ Der Admin hat auf der Seite von Fixanfragen ein Filter wo er die Kommentare filt
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### test
+Der Admin hat auf der Seite von Fixanfragen ein Filter wo er die Kommentare filtern kann nach bestimmten plätzen
