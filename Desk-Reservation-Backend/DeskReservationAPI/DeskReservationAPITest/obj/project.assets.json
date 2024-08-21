@@ -9328,11 +9328,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\AlkanjO\\Desktop\\DeskReservationProject\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPITest\\DeskReservationAPITest.csproj",
+      "projectUniqueName": "C:\\Users\\AlkanjO\\Desktop\\deskreservation\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPITest\\DeskReservationAPITest.csproj",
       "projectName": "DeskReservationAPITest",
-      "projectPath": "C:\\Users\\AlkanjO\\Desktop\\DeskReservationProject\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPITest\\DeskReservationAPITest.csproj",
+      "projectPath": "C:\\Users\\AlkanjO\\Desktop\\deskreservation\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPITest\\DeskReservationAPITest.csproj",
       "packagesPath": "C:\\Users\\AlkanjO\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\AlkanjO\\Desktop\\DeskReservationProject\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPITest\\obj\\",
+      "outputPath": "C:\\Users\\AlkanjO\\Desktop\\deskreservation\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPITest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -9354,8 +9354,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\AlkanjO\\Desktop\\DeskReservationProject\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPI\\DeskReservationAPI.csproj": {
-              "projectPath": "C:\\Users\\AlkanjO\\Desktop\\DeskReservationProject\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPI\\DeskReservationAPI.csproj"
+            "C:\\Users\\AlkanjO\\Desktop\\deskreservation\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPI\\DeskReservationAPI.csproj": {
+              "projectPath": "C:\\Users\\AlkanjO\\Desktop\\deskreservation\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPI\\DeskReservationAPI.csproj"
             }
           }
         }

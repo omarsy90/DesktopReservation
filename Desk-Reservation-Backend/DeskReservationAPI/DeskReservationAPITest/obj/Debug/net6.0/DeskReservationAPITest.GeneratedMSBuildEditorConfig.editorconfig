@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DeskReservationAPITest
-build_property.ProjectDir = C:\Users\AlkanjO\Desktop\DeskReservationProject\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\DeskReservationAPITest\
+build_property.ProjectDir = C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\DeskReservationAPITest\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Wi2HhVd6u7Ypy3INhGNsYTEBCFxtUqJ7mYVbGWdJPwNaN1+4f/QvplDHobZMGozwMG1gucBwsHpwzZJsN0D94A==",
+  "dgSpecHash": "9iEUh3fPsjC9YUpdEyU60sN8t9GRwALugRpQXNl4x+OyX7n9eMiNDp3pDzT6Dsw3Umt1J+W7GnvwCRTJ9khEJg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\AlkanjO\\Desktop\\DeskReservationProject\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPI\\DeskReservationAPI.csproj",
+  "projectFilePath": "C:\\Users\\AlkanjO\\Desktop\\deskreservation\\DesktopReservation\\Desk-Reservation-Backend\\DeskReservationAPI\\DeskReservationAPI\\DeskReservationAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AlkanjO\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\AlkanjO\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
