@@ -21,11 +21,11 @@ namespace DeskReservationAPI.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
-        ITokenGenerator _tokenGenerator;
+        ITokenManager _tokenGenerator;
         IUserRepository _userRepository;
         private PasswordEncoder _passwordEncoder;
         private EmailTextChecker _emailTextChecker;
-        public UserController(ITokenGenerator tokenGenerator, IUserRepository userRepository)
+        public UserController(ITokenManager tokenGenerator, IUserRepository userRepository)
         {
             _tokenGenerator = tokenGenerator;
             _userRepository = userRepository;
@@ -42,6 +42,7 @@ namespace DeskReservationAPI.Controllers
             }
 
             string encodedPass = _passwordEncoder.Encode(model.Password);
+         
 
             if (!await _userRepository.IsUserExist(model.Email,encodedPass )) 
             {

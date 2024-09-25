@@ -1,4 +1,5 @@
 ﻿
+using DeskReservationAPI.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using System.Reflection.Metadata;
@@ -6,13 +7,16 @@ namespace DeskReservationAPI.Model
 {
     public class ApplicationDBContext : DbContext
     {
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext>options):base(options) 
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
-                
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+       
+
             modelBuilder.Entity<Reservation>()
        .HasDiscriminator<string>("ReservationType")
        .HasValue<FlexReservation>("flex")
@@ -24,39 +28,57 @@ namespace DeskReservationAPI.Model
                 );
 
             modelBuilder.Entity<Desk>().HasData(
-                 GenerateRundomDesks(50,5)
-                ) ;
+                 GenerateRundomDesks(50, 5)
+                );
 
             modelBuilder.Entity<Role>().HasData
                 (
                 new Role { RoleID = 1, Name = "user" },
-                new Role { RoleID =2, Name = "admin" }
+                new Role { RoleID = 2, Name = "admin" }
+                );
+
+
+
+            PasswordEncoder pswEncoder = new PasswordEncoder();
+
+            modelBuilder.Entity<User>().HasData(
+                new User { UserID = Guid.NewGuid(), FirstName = "user", LastName = "user", Email = "user@gmail.com", Department = "dep", Password = pswEncoder.Encode("user"), RoleID = 1 }
+                );
+
+            modelBuilder.Entity<User>().HasData(
+               new User { UserID = Guid.NewGuid(), FirstName = "admin", LastName = "admin", Email = "admin@gmail.com", Department = "dep", Password = pswEncoder.Encode("admin"), RoleID = 2 }
+               );
+
+            modelBuilder.Entity<Equipment>().HasData
+                (
+                  new Equipment {EquipmentID = 1, Feature="socet"},
+                  new Equipment { EquipmentID = 2,Feature ="screen"}
                 );
 
         }
 
-        private IEnumerable<Office> GenerateRundomOffices(int count )
+        private IEnumerable<Office> GenerateRundomOffices(int count)
         {
             List<Office> offices = new List<Office>();
-            for ( int i = 0; i < count; i++ )
+            for (int i = 0; i < count; i++)
             {
-                Office office = new Office { OfficeID = i+1,Name=$"office_{i+1}" };
-                offices.Add( office );
+                Office office = new Office { OfficeID = i + 1, Name = $"office_{i + 1}" };
+                offices.Add(office);
             }
             return offices;
 
         }
 
-        private IEnumerable<Desk>GenerateRundomDesks(int desksCount,int officesCount)
+        private IEnumerable<Desk> GenerateRundomDesks(int desksCount, int officesCount)
         {
             List<Desk> desks = new List<Desk>();
             int quote = 0;
-          quote =  desksCount % officesCount == 0 ? desksCount / officesCount : (desksCount / officesCount) + 1;  
-            for ( int i = 0;i < desksCount;i++)
+            quote = desksCount % officesCount == 0 ? desksCount / officesCount : (desksCount / officesCount) + 1;
+            for (int i = 0; i < desksCount; i++)
             {
-                int officeID = (i / quote) +1;
+                int officeID = (i / quote) + 1;
                 Desk desk = new Desk { DeskID = i + 1, Label = $"desk_{i + 1}", Map = "default.png", OfficeID = officeID };
-                desks.Add( desk );
+                desks.Add(desk);
             }
             return desks;
         }

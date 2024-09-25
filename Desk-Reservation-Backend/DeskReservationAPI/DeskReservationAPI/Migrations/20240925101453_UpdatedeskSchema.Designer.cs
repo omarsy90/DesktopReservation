@@ -4,6 +4,7 @@ using DeskReservationAPI.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeskReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240925101453_UpdatedeskSchema")]
+    partial class UpdatedeskSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -516,18 +519,6 @@ namespace DeskReservationAPI.Migrations
                     b.HasKey("EquipmentID");
 
                     b.ToTable("Equipments");
-
-                    b.HasData(
-                        new
-                        {
-                            EquipmentID = 1,
-                            Feature = "socet"
-                        },
-                        new
-                        {
-                            EquipmentID = 2,
-                            Feature = "screen"
-                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Office", b =>
@@ -679,28 +670,6 @@ namespace DeskReservationAPI.Migrations
                     b.HasIndex("RoleID");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserID = new Guid("ba837924-5529-47fe-b449-bc249c3cd11b"),
-                            Department = "dep",
-                            Email = "user@gmail.com",
-                            FirstName = "user",
-                            LastName = "user",
-                            Password = "Wdhsa4sV38jU1gQf0nhLBxR3VoUjI8pcOxJHm+iImCc=",
-                            RoleID = 1
-                        },
-                        new
-                        {
-                            UserID = new Guid("621ada31-ed84-4614-b064-d8e882154081"),
-                            Department = "dep",
-                            Email = "admin@gmail.com",
-                            FirstName = "admin",
-                            LastName = "admin",
-                            Password = "ImurlGyyIPEa3+UpWmpkx3cHpNkG2U4JgJ6x6QtQjDA=",
-                            RoleID = 2
-                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Fixreservation", b =>

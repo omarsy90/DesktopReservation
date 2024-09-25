@@ -14,6 +14,8 @@ namespace DeskReservationAPI.Model
         public virtual Office Office { set; get; }
         public int OfficeID { set; get; }
 
+        public bool IsDeskActive { set; get; }
+
         public virtual List<Equipment> Equipments { set; get; }
         
     }

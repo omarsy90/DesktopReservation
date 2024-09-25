@@ -13,6 +13,7 @@ namespace DeskReservationAPI.Repository
         Task<bool> AddUser(User user);
         Task<User> GetUser(string email, string password);
         Task<int> GetRoleID(string RoleName);
+        Task<bool> IsUserAdmin(string userID);
     }
 
     public class UserRepository : IUserRepository
@@ -67,6 +68,15 @@ namespace DeskReservationAPI.Repository
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(u=>u.Email == email);
             return user != null;
+        }
+
+        public async Task<bool> IsUserAdmin(string userID)
+        {
+            var user = await _dbContext.Users.Include(u=>u.Role).FirstOrDefaultAsync(us => us.UserID.ToString() == userID);
+            if(user == null)  return false;
+
+           return  user.Role.Name == RoleName.Admin;
+            
         }
 
         public class RoleName

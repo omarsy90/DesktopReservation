@@ -7,7 +7,7 @@ namespace DeskReservationAPI.Model
     {
         [Key]
         public int EquipmentID {  get; set; }
-        public string feature { get; set; }    
+        public string Feature { get; set; }    
         public List<Desk> Desks { get; set; }
 
     }

@@ -4,6 +4,7 @@ using DeskReservationAPI.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeskReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240925132456_SeedUserMigration")]
+    partial class SeedUserMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -516,18 +519,6 @@ namespace DeskReservationAPI.Migrations
                     b.HasKey("EquipmentID");
 
                     b.ToTable("Equipments");
-
-                    b.HasData(
-                        new
-                        {
-                            EquipmentID = 1,
-                            Feature = "socet"
-                        },
-                        new
-                        {
-                            EquipmentID = 2,
-                            Feature = "screen"
-                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Office", b =>
@@ -683,7 +674,7 @@ namespace DeskReservationAPI.Migrations
                     b.HasData(
                         new
                         {
-                            UserID = new Guid("ba837924-5529-47fe-b449-bc249c3cd11b"),
+                            UserID = new Guid("a13dc7a2-5451-413b-ac26-415f6157d53d"),
                             Department = "dep",
                             Email = "user@gmail.com",
                             FirstName = "user",
@@ -693,7 +684,7 @@ namespace DeskReservationAPI.Migrations
                         },
                         new
                         {
-                            UserID = new Guid("621ada31-ed84-4614-b064-d8e882154081"),
+                            UserID = new Guid("c4541a59-d377-46d0-92a7-03e9cde1522e"),
                             Department = "dep",
                             Email = "admin@gmail.com",
                             FirstName = "admin",

@@ -7,14 +7,17 @@ using System.Text;
 
 namespace DeskReservationAPI.Utility
 {
-    public interface ITokenGenerator
+    public interface ITokenManager
     {
         SymmetricSecurityKey GetSymmetricSecurityKey();
         string GetToken(Dictionary<string, string> keyValuePairs);
-      
+
+        public string GetClaimByKey(string token, string key);
+
+
     }
 
-    public class TokenGenerator : ITokenGenerator
+    public class TokenManager : ITokenManager
     {
 
 
@@ -23,7 +26,7 @@ namespace DeskReservationAPI.Utility
         private TokenValidationParameters _tokenValidationParameters;
         private SymmetricSecurityKey _symmetricSecurityKey;
         private SigningCredentials _signingCredentials;
-        public TokenGenerator(JWTSetting jwtSetting)
+        public TokenManager(JWTSetting jwtSetting)
         {
 
             _jwtSetting = jwtSetting;
@@ -76,14 +79,20 @@ namespace DeskReservationAPI.Utility
         }
 
 
+        public string GetClaimByKey(string token , string key)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+            Dictionary<string, string> claimDic = new Dictionary<string, string>();
+            foreach (var item in jwtToken.Claims)
+            {
+                claimDic.Add(item.Type, item.Value);
+            }
+
+            claimDic.TryGetValue(key, out string userID);
+            return userID;
+        }
       
-
-
-
- 
-
-
-
     }
 
 

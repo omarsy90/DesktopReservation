@@ -18,6 +18,8 @@ namespace DeskReservationAPI
     {
         public static void Main(string[] args)
         { 
+
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -28,6 +30,9 @@ namespace DeskReservationAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer("Data Source=t-s1at1001\\Inst1;Initial Catalog=BookingDesk;Persist Security Info=True;User ID=Produktion;Password=wo7bdk;TrustServerCertificate=True"));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IDeskRepository, DeskRepository>();
+            builder.Services.AddScoped<IOfficeRepository,OfficeRepository>();
+            builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
             // JWT Configuration
 
@@ -49,12 +54,12 @@ namespace DeskReservationAPI
                 SecurityAlgorithm = SecurityAlgorithms.HmacSha256,
             };
 
-            TokenGenerator tokenGenerator = new TokenGenerator(jWTSetting);
-            builder.Services.AddSingleton < ITokenGenerator>(tokenGenerator);
+            TokenManager tokenGenerator = new TokenManager(jWTSetting);
+            builder.Services.AddSingleton < ITokenManager>(tokenGenerator);
 
 
 
-            // implement custom TokenGenerator in swagger
+            // implement custom TokenManager in swagger
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo

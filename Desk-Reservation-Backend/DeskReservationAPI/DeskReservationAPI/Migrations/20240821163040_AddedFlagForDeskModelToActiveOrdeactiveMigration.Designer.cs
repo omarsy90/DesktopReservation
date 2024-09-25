@@ -4,6 +4,7 @@ using DeskReservationAPI.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeskReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240821163040_AddedFlagForDeskModelToActiveOrdeactiveMigration")]
+    partial class AddedFlagForDeskModelToActiveOrdeactiveMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,8 +81,8 @@ namespace DeskReservationAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeskID"));
 
-                    b.Property<bool>("IsDeskActive")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsDeskActive")
+                        .HasColumnType("int");
 
                     b.Property<string>("Label")
                         .IsRequired()
@@ -102,7 +105,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 1,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_1",
                             Map = "default.png",
                             OfficeID = 1
@@ -110,7 +113,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 2,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_2",
                             Map = "default.png",
                             OfficeID = 1
@@ -118,7 +121,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 3,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_3",
                             Map = "default.png",
                             OfficeID = 1
@@ -126,7 +129,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 4,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_4",
                             Map = "default.png",
                             OfficeID = 1
@@ -134,7 +137,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 5,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_5",
                             Map = "default.png",
                             OfficeID = 1
@@ -142,7 +145,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 6,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_6",
                             Map = "default.png",
                             OfficeID = 1
@@ -150,7 +153,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 7,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_7",
                             Map = "default.png",
                             OfficeID = 1
@@ -158,7 +161,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 8,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_8",
                             Map = "default.png",
                             OfficeID = 1
@@ -166,7 +169,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 9,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_9",
                             Map = "default.png",
                             OfficeID = 1
@@ -174,7 +177,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 10,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_10",
                             Map = "default.png",
                             OfficeID = 1
@@ -182,7 +185,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 11,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_11",
                             Map = "default.png",
                             OfficeID = 2
@@ -190,7 +193,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 12,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_12",
                             Map = "default.png",
                             OfficeID = 2
@@ -198,7 +201,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 13,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_13",
                             Map = "default.png",
                             OfficeID = 2
@@ -206,7 +209,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 14,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_14",
                             Map = "default.png",
                             OfficeID = 2
@@ -214,7 +217,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 15,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_15",
                             Map = "default.png",
                             OfficeID = 2
@@ -222,7 +225,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 16,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_16",
                             Map = "default.png",
                             OfficeID = 2
@@ -230,7 +233,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 17,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_17",
                             Map = "default.png",
                             OfficeID = 2
@@ -238,7 +241,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 18,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_18",
                             Map = "default.png",
                             OfficeID = 2
@@ -246,7 +249,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 19,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_19",
                             Map = "default.png",
                             OfficeID = 2
@@ -254,7 +257,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 20,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_20",
                             Map = "default.png",
                             OfficeID = 2
@@ -262,7 +265,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 21,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_21",
                             Map = "default.png",
                             OfficeID = 3
@@ -270,7 +273,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 22,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_22",
                             Map = "default.png",
                             OfficeID = 3
@@ -278,7 +281,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 23,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_23",
                             Map = "default.png",
                             OfficeID = 3
@@ -286,7 +289,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 24,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_24",
                             Map = "default.png",
                             OfficeID = 3
@@ -294,7 +297,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 25,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_25",
                             Map = "default.png",
                             OfficeID = 3
@@ -302,7 +305,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 26,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_26",
                             Map = "default.png",
                             OfficeID = 3
@@ -310,7 +313,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 27,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_27",
                             Map = "default.png",
                             OfficeID = 3
@@ -318,7 +321,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 28,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_28",
                             Map = "default.png",
                             OfficeID = 3
@@ -326,7 +329,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 29,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_29",
                             Map = "default.png",
                             OfficeID = 3
@@ -334,7 +337,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 30,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_30",
                             Map = "default.png",
                             OfficeID = 3
@@ -342,7 +345,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 31,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_31",
                             Map = "default.png",
                             OfficeID = 4
@@ -350,7 +353,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 32,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_32",
                             Map = "default.png",
                             OfficeID = 4
@@ -358,7 +361,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 33,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_33",
                             Map = "default.png",
                             OfficeID = 4
@@ -366,7 +369,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 34,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_34",
                             Map = "default.png",
                             OfficeID = 4
@@ -374,7 +377,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 35,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_35",
                             Map = "default.png",
                             OfficeID = 4
@@ -382,7 +385,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 36,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_36",
                             Map = "default.png",
                             OfficeID = 4
@@ -390,7 +393,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 37,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_37",
                             Map = "default.png",
                             OfficeID = 4
@@ -398,7 +401,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 38,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_38",
                             Map = "default.png",
                             OfficeID = 4
@@ -406,7 +409,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 39,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_39",
                             Map = "default.png",
                             OfficeID = 4
@@ -414,7 +417,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 40,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_40",
                             Map = "default.png",
                             OfficeID = 4
@@ -422,7 +425,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 41,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_41",
                             Map = "default.png",
                             OfficeID = 5
@@ -430,7 +433,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 42,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_42",
                             Map = "default.png",
                             OfficeID = 5
@@ -438,7 +441,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 43,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_43",
                             Map = "default.png",
                             OfficeID = 5
@@ -446,7 +449,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 44,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_44",
                             Map = "default.png",
                             OfficeID = 5
@@ -454,7 +457,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 45,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_45",
                             Map = "default.png",
                             OfficeID = 5
@@ -462,7 +465,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 46,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_46",
                             Map = "default.png",
                             OfficeID = 5
@@ -470,7 +473,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 47,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_47",
                             Map = "default.png",
                             OfficeID = 5
@@ -478,7 +481,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 48,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_48",
                             Map = "default.png",
                             OfficeID = 5
@@ -486,7 +489,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 49,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_49",
                             Map = "default.png",
                             OfficeID = 5
@@ -494,7 +497,7 @@ namespace DeskReservationAPI.Migrations
                         new
                         {
                             DeskID = 50,
-                            IsDeskActive = false,
+                            IsDeskActive = 0,
                             Label = "desk_50",
                             Map = "default.png",
                             OfficeID = 5
@@ -509,25 +512,13 @@ namespace DeskReservationAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EquipmentID"));
 
-                    b.Property<string>("Feature")
+                    b.Property<string>("feature")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EquipmentID");
 
                     b.ToTable("Equipments");
-
-                    b.HasData(
-                        new
-                        {
-                            EquipmentID = 1,
-                            Feature = "socet"
-                        },
-                        new
-                        {
-                            EquipmentID = 2,
-                            Feature = "screen"
-                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Office", b =>
@@ -679,28 +670,6 @@ namespace DeskReservationAPI.Migrations
                     b.HasIndex("RoleID");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserID = new Guid("ba837924-5529-47fe-b449-bc249c3cd11b"),
-                            Department = "dep",
-                            Email = "user@gmail.com",
-                            FirstName = "user",
-                            LastName = "user",
-                            Password = "Wdhsa4sV38jU1gQf0nhLBxR3VoUjI8pcOxJHm+iImCc=",
-                            RoleID = 1
-                        },
-                        new
-                        {
-                            UserID = new Guid("621ada31-ed84-4614-b064-d8e882154081"),
-                            Department = "dep",
-                            Email = "admin@gmail.com",
-                            FirstName = "admin",
-                            LastName = "admin",
-                            Password = "ImurlGyyIPEa3+UpWmpkx3cHpNkG2U4JgJ6x6QtQjDA=",
-                            RoleID = 2
-                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Fixreservation", b =>
