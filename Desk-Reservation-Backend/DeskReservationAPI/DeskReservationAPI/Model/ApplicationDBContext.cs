@@ -51,7 +51,7 @@ namespace DeskReservationAPI.Model
 
             modelBuilder.Entity<Equipment>().HasData
                 (
-                  new Equipment {EquipmentID = 1, Feature="socet"},
+                  new Equipment {EquipmentID = 1, Feature="socket"},
                   new Equipment { EquipmentID = 2,Feature ="screen"}
                 );
 

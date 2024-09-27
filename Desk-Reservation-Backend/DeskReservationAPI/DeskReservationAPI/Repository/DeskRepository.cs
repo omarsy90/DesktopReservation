@@ -9,7 +9,7 @@ namespace DeskReservationAPI.Repository
         Task<Desk> GetDeskByID(int id);
         Task<IEnumerable<Desk>> GetDesks();
         Task<IEnumerable<Desk>> GetDesksByOffice(int officeID);
-        Task<bool> UpdateDesk(int id, Desk newDesk);
+        Task<Desk> UpdateDesk(int id, Desk newDesk);
 
         Task<bool> AddEqipment(int deskID, Equipment equip);
 
@@ -49,12 +49,12 @@ namespace DeskReservationAPI.Repository
             return await _dbContext.Desks.Include(d => d.Office).Include(d => d.Equipments).Where(d => d.OfficeID == officeID).ToListAsync();
         }
 
-        public async Task<bool> UpdateDesk(int id, Desk newDesk)
+        public async Task<Desk> UpdateDesk(int id, Desk newDesk)
         {
-            Desk desk = await _dbContext.Desks.FirstOrDefaultAsync(d => d.DeskID == id);
+            Desk desk = await _dbContext.Desks.Include(d=>d.Office).Include(d=>d.Equipments).FirstOrDefaultAsync(d => d.DeskID == id);
             if (desk == null)
             {
-                return false;
+                throw new ArgumentException($"desk with given Id : {id} not found");
             }
 
             desk.Label = newDesk.Label;
@@ -63,8 +63,8 @@ namespace DeskReservationAPI.Repository
             desk.Map = newDesk.Map;
             desk.Equipments = newDesk.Equipments;
 
-            _dbContext.SaveChangesAsync();
-            return true;
+           await _dbContext.SaveChangesAsync();
+            return desk;
 
         }
 

@@ -90,7 +90,7 @@ namespace DeskReservationAPI.Controllers
                 );
 
 
-          await  AssignFeuturesToDesk(model.Equipmentst, desk);
+            await AssignFeuturesToDesk(model.Equipmentst, desk);
             //eager loading to get all data for desk from different tables
             desk = await _deskRepository.GetDeskByID(desk.DeskID);
 
@@ -103,9 +103,53 @@ namespace DeskReservationAPI.Controllers
             return Ok(deskJson);
         }
 
-        private async Task<Office>  RegisterOffice(string officeName)
+
+        [HttpPut("")]
+        public async Task<IActionResult> Update([FromBody] DeskModel newModel)
         {
-          var office =  await _officeRepository.GetOfficeByName(officeName);
+            bool isadmin = await AuthenticateAdmin(HttpContext);
+            if (!isadmin)
+            {
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "Unauthorized" });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (await _deskRepository.GetDeskByID(newModel.Id) == null)
+            {
+                return NotFound();
+            }
+
+            var office = await RegisterOffice(newModel.Office);
+            var updatedDesk = await _deskRepository.UpdateDesk(newModel.Id, new Desk
+            {
+                Label = newModel.Label,
+                Map = newModel.Map,
+                OfficeID = office.OfficeID,
+                IsDeskActive = newModel.isActive
+            });
+
+            // update equipments for desk
+            AssignFeuturesToDesk(newModel.Equipmentst, await _deskRepository.GetDeskByID(newModel.Id));
+            //eager loading to get all data for desk from different tables
+            var desk = await _deskRepository.GetDeskByID(updatedDesk.DeskID);
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles
+            };
+            var deskJson = JsonSerializer.Serialize(desk, options);
+            return Ok(deskJson);
+        }
+
+
+
+
+        private async Task<Office> RegisterOffice(string officeName)
+        {
+            var office = await _officeRepository.GetOfficeByName(officeName);
             if (office == null)
             {
                 office = await _officeRepository.AddOffice
@@ -115,6 +159,24 @@ namespace DeskReservationAPI.Controllers
             }
 
             return office;
+        }
+
+        private async Task<bool> AuthenticateAdmin(HttpContext httpContext)
+        {
+            string token = HttpContext.Request.Headers["Authorization"].ToString();
+            string jwtString = token.Substring("Bearer ".Length).Trim();
+            string userID = _tokenManager.GetClaimByKey(jwtString, "id");
+            if (userID == null)
+            {
+                return false;
+            }
+
+            bool isAdmin = await _userRepository.IsUserAdmin(userID);
+            if (!isAdmin)
+            {
+                return false;
+            }
+            return true;
         }
 
         private async Task AssignFeuturesToDesk(string equipmentStr, Desk desk)
@@ -133,70 +195,6 @@ namespace DeskReservationAPI.Controllers
                     await _deskRepository.AddEqipment(desk.DeskID, equipment);
                 }
             }
-        }
-
-        [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] DeskModel newModel)
-        {
-            
-
-            bool isadmin = await AuthenticateAdmin(HttpContext);
-            if (!isadmin)
-            {
-                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "Unauthorized" });
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if(await _deskRepository.GetDeskByID(newModel.Id) == null)
-            {
-                return NotFound();
-            }
-
-
-            var office =  await RegisterOffice(newModel.Office);
-
-         var updatedDesk =  await _deskRepository.UpdateDesk(newModel.Id, new Desk
-            {
-               Label = newModel.Label,
-               Map = newModel.Map,
-               OfficeID = office.OfficeID,
-               IsDeskActive = newModel.isActive
-            });
-
-            // update equipments for desk
-            AssignFeuturesToDesk(newModel.Equipmentst, await _deskRepository.GetDeskByID(newModel.Id));
-
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles
-            };
-            var deskJson = JsonSerializer.Serialize(updatedDesk, options);
-
-            return Ok(deskJson);
-
-        }
-
-
-        private async Task<bool> AuthenticateAdmin(HttpContext httpContext)
-        {
-            string token = HttpContext.Request.Headers["Authorization"].ToString();
-            string jwtString = token.Substring("Bearer ".Length).Trim();
-            string userID = _tokenManager.GetClaimByKey(jwtString, "id");
-            if (userID == null)
-            {
-                return false;
-            }
-
-            bool isAdmin = await _userRepository.IsUserAdmin(userID);
-            if (!isAdmin)
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

@@ -13,23 +13,22 @@ namespace DeskReservationAPITest
     public class DeskController_Create_Test : IClassFixture<TestingWebAppFactory<Program>>
     {
         private readonly HttpClient _client;
-        int port = 7070;
+       
+        private Utility _utility;
 
-        string BasicUrl;
-
-        private int SeedingOfficeCout = 5;
-        private int SeedingEquipmentCout = 2;
+        private int SeededOfficeCout = 5;
+        private int SeededEquipmentCout = 2;
         public DeskController_Create_Test(TestingWebAppFactory<Program> factory)
         {
             _client = factory.CreateClient();
-            BasicUrl = $"https://localhost:{port}";
+            _utility = new Utility(_client);
         }
 
 
         DeskModel newDeskModel = new DeskModel()
         {
             Id = 0
-            ,Equipmentst = "socet,screen"
+            ,Equipmentst = "socket,screen"
             ,Label = "testdesk"
             ,isActive = true
             ,Map = "test"
@@ -78,9 +77,9 @@ namespace DeskReservationAPITest
 
             //Assert
 
-            var json = await GetContentFromResponse(response);
+            var json = await _utility.GetContentFromResponse(response);
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.OK);
-            Assert.True(json.Contains("socet"));
+            Assert.True(json.Contains("socket"));
             Assert.True(json.Contains("screen"));
         }
 
@@ -96,7 +95,7 @@ namespace DeskReservationAPITest
 
             //Assert
          
-            var json = await  GetContentFromResponse(response);
+            var json = await _utility.GetContentFromResponse(response);
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.OK);
             Assert.True(json.Contains("\"OfficeID\":1"));
            
@@ -113,10 +112,10 @@ namespace DeskReservationAPITest
             HttpResponseMessage response = await SendCreateDeskRequest(UserType.AdminUser, newDeskModel);
 
             //Assert
-            var json = await GetContentFromResponse(response);
+            var json = await _utility.GetContentFromResponse(response);
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.OK);
 
-            for ( int i= 0; i<SeedingOfficeCout;i++ )
+            for ( int i= 0; i<SeededOfficeCout;i++ )
             {
                 Assert.False(json.Contains($"\"OfficeID\":{i+1}"));
             }
@@ -135,7 +134,7 @@ namespace DeskReservationAPITest
             HttpResponseMessage response = await SendCreateDeskRequest(UserType.AdminUser, newDeskModel);
 
             //Assert
-            string json = await GetContentFromResponse(response);
+            string json = await _utility.GetContentFromResponse(response);
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.OK);
             Assert.True(json.Contains("\"EquipmentID\":2"));
 
@@ -149,10 +148,10 @@ namespace DeskReservationAPITest
             //Action
             HttpResponseMessage response = await SendCreateDeskRequest(UserType.AdminUser, newDeskModel);
             //Assert
-            string json = await GetContentFromResponse(response);
+            string json = await _utility.GetContentFromResponse(response);
 
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.OK);
-            for (int i = 0; i < SeedingEquipmentCout; i++)
+            for (int i = 0; i < SeededEquipmentCout; i++)
             {
                 Assert.False(json.Contains($"\"EquipmentID\":{i+1}"));
             }
@@ -167,64 +166,33 @@ namespace DeskReservationAPITest
             HttpResponseMessage responseFromLogin;
             if (userType == UserType.AdminUser)
             {
-                 responseFromLogin = await LoginAdmin();
+                 responseFromLogin = await _utility.Login( new LoginModel { Email= "admin@gmail.com" , Password="admin"} );
             }
             else
             {
-                 responseFromLogin = await LoginNormalUser();
+                 responseFromLogin = await _utility.Login(new LoginModel { Email = "user@gmail.com", Password = "user" });
             }
             
-            string token = await ExtractToken(responseFromLogin);
+            string token = await _utility.ExtractToken(responseFromLogin);
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             string payload = JsonSerializer.Serialize(model);
             StringContent content = new StringContent(payload, Encoding.UTF8, "application/json");
             //Action
-            var response = await _client.PostAsync(BasicUrl + "/Desk", content);
+            var response = await _client.PostAsync(Utility.BasicUrl+ "/Desk", content);
             return response;
         }
 
 
 
-        private async Task<string> GetContentFromResponse(HttpResponseMessage response)
-        {
-            Stream stream = await response.Content.ReadAsStreamAsync();
-            StreamReader reader = new StreamReader(stream);
-            var json = await reader.ReadToEndAsync();
-            return json;
-        }
-
-        private async Task<HttpResponseMessage> LoginAdmin()
-        {
-            string payload = JsonSerializer.Serialize(new LoginModel { Email = "admin@gmail.com", Password = "admin" });
-            StringContent content = new StringContent(payload, Encoding.UTF8, "application/json");
-           HttpResponseMessage response = await _client.PostAsync($"{BasicUrl}/User/login", content);
-
-           return response;
-
-        }
+      
+       
 
 
-        private async Task<HttpResponseMessage> LoginNormalUser()
-        {
-            string payload = JsonSerializer.Serialize(new LoginModel { Email = "user@gmail.com", Password = "user" });
-            StringContent content = new StringContent(payload, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _client.PostAsync($"{BasicUrl}/User/login", content);
-
-            return response;
-
-        }
+       
 
 
 
-        private async  Task< string> ExtractToken(HttpResponseMessage response)
-        {
-            Stream stream = await response.Content.ReadAsStreamAsync();
-            StreamReader reader = new StreamReader(stream);
-            string strResponse = reader.ReadToEnd();
-            var substring = strResponse.Split("\"token\":\"");
-            var token = substring[1].Split("\"}")[0];
-            return token;
-        }
+       
 
       
 
