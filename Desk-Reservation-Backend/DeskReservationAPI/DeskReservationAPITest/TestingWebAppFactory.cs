@@ -94,6 +94,8 @@ namespace DeskReservationAPITest
                 services.AddScoped<IDeskRepository, DeskRepository>();
                 services.AddScoped<IOfficeRepository, OfficeRepository>();
                 services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+                services.AddScoped<AuthenticationService>();
+               
             });
         }
 

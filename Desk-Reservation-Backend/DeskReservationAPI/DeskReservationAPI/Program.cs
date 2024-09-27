@@ -33,6 +33,9 @@ namespace DeskReservationAPI
             builder.Services.AddScoped<IDeskRepository, DeskRepository>();
             builder.Services.AddScoped<IOfficeRepository,OfficeRepository>();
             builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+            builder.Services.AddScoped<AuthenticationService>();
+           
+ 
 
             // JWT Configuration
 
@@ -54,8 +57,8 @@ namespace DeskReservationAPI
                 SecurityAlgorithm = SecurityAlgorithms.HmacSha256,
             };
 
-            TokenManager tokenGenerator = new TokenManager(jWTSetting);
-            builder.Services.AddSingleton < ITokenManager>(tokenGenerator);
+            TokenManager tokenManager = new TokenManager(jWTSetting);
+            builder.Services.AddSingleton < ITokenManager>(tokenManager);
 
 
 
@@ -108,7 +111,7 @@ namespace DeskReservationAPI
                 {
                     ValidAlgorithms = new[] { jWTSetting.SecurityAlgorithm },
                     ValidateIssuerSigningKey = jWTSetting.ValidateIssuerSigningKey,
-                    IssuerSigningKey = tokenGenerator.GetSymmetricSecurityKey(),
+                    IssuerSigningKey = tokenManager.GetSymmetricSecurityKey(),
                     ValidateIssuer = jWTSetting.ValidateIssuer,
                     ValidateAudience = jWTSetting.ValidateAudience,
                     ClockSkew = jWTSetting.ClockSkew,
@@ -135,8 +138,10 @@ namespace DeskReservationAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
+          
 
-            app.MapControllers();
+             app.MapControllers();
+
 
             app.Run();
         }

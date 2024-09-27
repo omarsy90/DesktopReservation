@@ -178,7 +178,7 @@ namespace DeskReservationAPITest
             string payload = JsonSerializer.Serialize(model);
             StringContent content = new StringContent(payload, Encoding.UTF8, "application/json");
             //Action
-            var response = await _client.PostAsync(Utility.BasicUrl+ "/Desk", content);
+            var response = await _client.PostAsync(Utility.BasicUrl+ "/desk", content);
             return response;
         }
 

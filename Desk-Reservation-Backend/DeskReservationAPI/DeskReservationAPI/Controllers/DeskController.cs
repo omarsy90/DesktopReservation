@@ -17,21 +17,18 @@ namespace DeskReservationAPI.Controllers
     public class DeskController : Controller
     {
         private readonly IDeskRepository _deskRepository;
-        private readonly ITokenManager _tokenManager;
-        private readonly IUserRepository _userRepository;
         private readonly IOfficeRepository _officeRepository;
         private readonly IEquipmentRepository _equipmentRepository;
+        private readonly AuthenticationService _authService;
         public DeskController(IDeskRepository deskRepository
-            , ITokenManager tokenManager
-            , IUserRepository userRepository
             , IOfficeRepository officeRepository
-            , IEquipmentRepository equipmentRepository)
+            , IEquipmentRepository equipmentRepository
+            ,AuthenticationService authService)
         {
             _deskRepository = deskRepository;
-            _tokenManager = tokenManager;
-            _userRepository = userRepository;
             _officeRepository = officeRepository;
             _equipmentRepository = equipmentRepository;
+            _authService = authService;
         }
 
         [HttpGet("")]
@@ -71,7 +68,7 @@ namespace DeskReservationAPI.Controllers
         public async Task<IActionResult> Create([FromBody] DeskModel model)
         {
 
-            bool isadmin = await AuthenticateAdmin(HttpContext);
+            bool isadmin = await _authService.AuthenticateAdmin(HttpContext);
             if (!isadmin)
             {
                 return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "Unauthorized" });
@@ -107,7 +104,7 @@ namespace DeskReservationAPI.Controllers
         [HttpPut("")]
         public async Task<IActionResult> Update([FromBody] DeskModel newModel)
         {
-            bool isadmin = await AuthenticateAdmin(HttpContext);
+            bool isadmin = await _authService.AuthenticateAdmin(HttpContext);
             if (!isadmin)
             {
                 return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "Unauthorized" });
@@ -161,23 +158,7 @@ namespace DeskReservationAPI.Controllers
             return office;
         }
 
-        private async Task<bool> AuthenticateAdmin(HttpContext httpContext)
-        {
-            string token = HttpContext.Request.Headers["Authorization"].ToString();
-            string jwtString = token.Substring("Bearer ".Length).Trim();
-            string userID = _tokenManager.GetClaimByKey(jwtString, "id");
-            if (userID == null)
-            {
-                return false;
-            }
-
-            bool isAdmin = await _userRepository.IsUserAdmin(userID);
-            if (!isAdmin)
-            {
-                return false;
-            }
-            return true;
-        }
+    
 
         private async Task AssignFeuturesToDesk(string equipmentStr, Desk desk)
         {

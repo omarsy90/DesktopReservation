@@ -36,6 +36,6 @@ namespace DeskReservationAPI.Model
 
     public class Fixreservation :Reservation
     {
-        public bool IsConfirmed { get; set; }
+        public bool? IsConfirmed { get; set; }
     }
 }
