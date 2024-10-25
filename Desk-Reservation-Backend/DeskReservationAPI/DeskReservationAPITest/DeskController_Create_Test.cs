@@ -84,7 +84,7 @@ namespace DeskReservationAPITest
         }
 
         [Fact]
-        public async Task Create_OfficeExist_RetuenDeskHasWithoutCreatingNewOffice()
+        public async Task Create_OfficeExist_RetuenDeskWithoutCreatingNewOffice()
         {
 
             //Arrange

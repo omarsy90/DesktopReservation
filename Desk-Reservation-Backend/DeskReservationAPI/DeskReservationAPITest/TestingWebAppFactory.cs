@@ -83,17 +83,22 @@ namespace DeskReservationAPITest
                     {
                         appContext.Database.EnsureCreated();
                     }
+
                     catch (Exception ex)
                     {
                         //Log errors or do anything you think it's needed
                         throw;
                     }
+
                 };
                 services.AddScoped<IUserRepository, UserRepository>();
                 services.AddSingleton<ITokenManager>(tokenGenerator);
                 services.AddScoped<IDeskRepository, DeskRepository>();
                 services.AddScoped<IOfficeRepository, OfficeRepository>();
                 services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+                services.AddScoped<IFixReservationRepository, FixReservationRepository>();
+                services.AddScoped<IDeskRepository,DeskRepository>();
+                services.AddScoped<IFlexReservationRepository, FlexReservationRepository>();
                 services.AddScoped<AuthenticationService>();
                
             });

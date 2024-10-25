@@ -17,8 +17,9 @@ namespace DeskReservationAPI
     public partial  class Program
     {
         public static void Main(string[] args)
-        { 
+        {
 
+          
 
             var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,8 @@ namespace DeskReservationAPI
             builder.Services.AddScoped<IDeskRepository, DeskRepository>();
             builder.Services.AddScoped<IOfficeRepository,OfficeRepository>();
             builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+            builder.Services.AddScoped<IFixReservationRepository, FixReservationRepository>();
+            builder.Services.AddScoped<IFlexReservationRepository,FlexReservationRepository>();
             builder.Services.AddScoped<AuthenticationService>();
            
  

@@ -37,7 +37,7 @@ namespace DeskReservationAPI.Utility
         public async Task<User> GetUser(HttpContext httpContext)
         {
             string token = httpContext.Request.Headers["Authorization"].ToString();
-            string jwtString = token.Substring("Bearer".Length).Trim();
+            string jwtString = token.Substring("Bearer ".Length).Trim();
             string userID = _tokenManager.GetClaimByKey(jwtString, "id");
             var user =  await _userRepository.GetUserByID(userID);
             return user;

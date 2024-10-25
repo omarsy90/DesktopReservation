@@ -5,59 +5,37 @@ namespace DeskReservationAPI.Repository
 {
     public interface IReservationRepository
     {
-        Task<IEnumerable<Reservation>> GetFixReservation();
-        Task<IEnumerable<Reservation>> GetFixReservationConfirmedByUserID(string userID);
-        Task<IEnumerable<Reservation>> GetFlexReservation();
-        Task<IEnumerable<Reservation>> GetFlexReservationByUserID(string userID);
-        Task<IEnumerable<Reservation>> GetFixReservationRequest();
-
-        Task<IEnumerable<Reservation>> GetFixReservationRequestByUserID(string userID);
+        Task<IEnumerable<Reservation>> GetResevationsByDesk(int deskId);
+        Task<IEnumerable<Reservation>> GetReservationsbyUserID(string userID);
     }
 
-    public class ReservationRepository : IReservationRepository
+    public abstract class ReservationRepository : IReservationRepository
     {
-
-        private ApplicationDBContext _dbcontext;
-        public ReservationRepository(ApplicationDBContext applicationDBContext)
+        protected ApplicationDBContext _dbContext;
+        public ReservationRepository(ApplicationDBContext dBContext)
         {
-            _dbcontext = applicationDBContext;
+            _dbContext = dBContext;
         }
 
-        public async Task<IEnumerable<Reservation>> GetFlexReservationByUserID(string userID)
+        public async Task<IEnumerable<Reservation>> GetReservationsbyUserID(string userID)
         {
-            var flexReservations = await _dbcontext.FlexReservations.Include(re => re.Desk).Include(re => re.Desk.Office).Where(re => re.UserID.ToString() == userID ).ToListAsync();
-            return flexReservations;
+           
+            List<Reservation> reservations = new List<Reservation>();
+          var fixReservations = await  _dbContext.FixReservations.Where(re => re.UserID == userID && re.IsConfirmed == true).AsNoTracking().ToListAsync();
+            var flexReservations = await _dbContext.FlexReservations.Where(re=>re.UserID == userID).AsNoTracking().ToListAsync();
+            reservations.AddRange(fixReservations);
+            reservations.AddRange(flexReservations);
+            return reservations;
         }
 
-        public async Task<IEnumerable<Reservation>> GetFixReservationConfirmedByUserID(string userID)
+        public async Task<IEnumerable<Reservation>> GetResevationsByDesk(int deskId)
         {
-            var fixReservations = await _dbcontext.FixReservations.Include(re => re.Desk).Include(re => re.Desk.Office).Where(re => re.UserID.ToString() == userID && re.IsConfirmed ==true).ToListAsync();
-            return fixReservations;
-        }
-
-        public async Task<IEnumerable<Reservation>> GetFlexReservation()
-        {
-            var flexReservation = await _dbcontext.FlexReservations.Include(re => re.Desk).Include(re => re.Desk.Office).ToListAsync();
-            return flexReservation;
-        }
-
-        public async Task<IEnumerable<Reservation>> GetFixReservation()
-        {
-            var fixReservation = await _dbcontext.FixReservations.Include(re => re.Desk).Include(re => re.Desk.Office).ToListAsync();
-            return fixReservation;
-        }
-
-
-        public async Task<IEnumerable<Reservation>> GetFixReservationRequest()
-        {
-            var fixReservationsRequests = await _dbcontext.FixReservations.Include(re => re.Desk).Include(re => re.Desk.Office).Where(re => re.IsConfirmed == null).ToListAsync();
-            return fixReservationsRequests;
-        }
-
-        public async Task<IEnumerable<Reservation>> GetFixReservationRequestByUserID(string userID)
-        {
-            var fixReservationsRequests = await _dbcontext.FixReservations.Include(re => re.Desk).Include(re => re.Desk.Office).Where(re=>re.UserID.ToString() ==userID && re.IsConfirmed == null).ToListAsync();
-            return fixReservationsRequests;
+            List<Reservation> reservations = new List<Reservation>();
+            var fixReservations = _dbContext.FixReservations.Where(re => re.DeskID == deskId && re.IsConfirmed == true);
+            var flexReservations = _dbContext.FlexReservations.Where(re => re.DeskID == deskId);
+            reservations.AddRange(fixReservations);
+            reservations.AddRange(flexReservations);
+            return await Task.FromResult(reservations);
         }
     }
 }

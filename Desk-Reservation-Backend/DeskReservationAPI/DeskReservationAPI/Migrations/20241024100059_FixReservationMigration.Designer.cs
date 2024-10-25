@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeskReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240925101453_UpdatedeskSchema")]
-    partial class UpdatedeskSchema
+    [Migration("20241024100059_FixReservationMigration")]
+    partial class FixReservationMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -519,6 +519,18 @@ namespace DeskReservationAPI.Migrations
                     b.HasKey("EquipmentID");
 
                     b.ToTable("Equipments");
+
+                    b.HasData(
+                        new
+                        {
+                            EquipmentID = 1,
+                            Feature = "socket"
+                        },
+                        new
+                        {
+                            EquipmentID = 2,
+                            Feature = "screen"
+                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Office", b =>
@@ -586,10 +598,11 @@ namespace DeskReservationAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserID1")
+                    b.Property<Guid?>("UserID1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("isFavourited")
@@ -670,16 +683,88 @@ namespace DeskReservationAPI.Migrations
                     b.HasIndex("RoleID");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserID = new Guid("b490ad07-7670-4b7b-8b78-e0176fa9ec4a"),
+                            Department = "dep",
+                            Email = "user@gmail.com",
+                            FirstName = "user",
+                            LastName = "user",
+                            Password = "Wdhsa4sV38jU1gQf0nhLBxR3VoUjI8pcOxJHm+iImCc=",
+                            RoleID = 1
+                        },
+                        new
+                        {
+                            UserID = new Guid("86c4c6c0-a30f-4595-968d-3ef3e09e9f6d"),
+                            Department = "dep",
+                            Email = "user2@gmail.com",
+                            FirstName = "user2",
+                            LastName = "user2",
+                            Password = "MtBDli4jZtpNRe4EYPmhzZZ8IfoCBCr3idMQMd4fZFU=",
+                            RoleID = 1
+                        },
+                        new
+                        {
+                            UserID = new Guid("66afef1e-0253-45f4-9968-6072073ad6c6"),
+                            Department = "dep",
+                            Email = "admin@gmail.com",
+                            FirstName = "admin",
+                            LastName = "admin",
+                            Password = "ImurlGyyIPEa3+UpWmpkx3cHpNkG2U4JgJ6x6QtQjDA=",
+                            RoleID = 2
+                        });
                 });
 
-            modelBuilder.Entity("DeskReservationAPI.Model.Fixreservation", b =>
+            modelBuilder.Entity("DeskReservationAPI.Model.FixReservation", b =>
                 {
                     b.HasBaseType("DeskReservationAPI.Model.Reservation");
 
-                    b.Property<bool>("IsConfirmed")
+                    b.Property<bool?>("IsConfirmed")
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("fix");
+
+                    b.HasData(
+                        new
+                        {
+                            ReservationID = 1,
+                            DateEnd = new DateTime(2024, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeskID = 1,
+                            UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A",
+                            isFavourited = false,
+                            IsConfirmed = true
+                        },
+                        new
+                        {
+                            ReservationID = 2,
+                            DateEnd = new DateTime(2023, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeskID = 1,
+                            UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A",
+                            isFavourited = false,
+                            IsConfirmed = true
+                        },
+                        new
+                        {
+                            ReservationID = 3,
+                            DateEnd = new DateTime(2024, 5, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeskID = 1,
+                            UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D",
+                            isFavourited = false
+                        },
+                        new
+                        {
+                            ReservationID = 7,
+                            DateEnd = new DateTime(2025, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeskID = 1,
+                            UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D",
+                            isFavourited = false
+                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.FlexReservation", b =>
@@ -687,6 +772,35 @@ namespace DeskReservationAPI.Migrations
                     b.HasBaseType("DeskReservationAPI.Model.Reservation");
 
                     b.HasDiscriminator().HasValue("flex");
+
+                    b.HasData(
+                        new
+                        {
+                            ReservationID = 4,
+                            DateEnd = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2024, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeskID = 2,
+                            UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A",
+                            isFavourited = false
+                        },
+                        new
+                        {
+                            ReservationID = 5,
+                            DateEnd = new DateTime(2024, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeskID = 2,
+                            UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D",
+                            isFavourited = false
+                        },
+                        new
+                        {
+                            ReservationID = 6,
+                            DateEnd = new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateStart = new DateTime(2024, 6, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeskID = 3,
+                            UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D",
+                            isFavourited = false
+                        });
                 });
 
             modelBuilder.Entity("DeskEquipment", b =>
@@ -744,9 +858,7 @@ namespace DeskReservationAPI.Migrations
 
                     b.HasOne("DeskReservationAPI.Model.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID1");
 
                     b.Navigation("Desk");
 

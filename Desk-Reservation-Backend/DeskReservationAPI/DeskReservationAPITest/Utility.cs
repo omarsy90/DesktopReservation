@@ -1,9 +1,11 @@
 ﻿using DeskReservationAPI.Model;
+using Microsoft.AspNetCore.Http.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DeskReservationAPITest
@@ -57,6 +59,16 @@ namespace DeskReservationAPITest
 
         }
 
+        public T Deserialize<T>(string str)
+        {
+            JsonSerializerOptions option = new JsonSerializerOptions()
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles
+            };
+
+          return   JsonSerializer.Deserialize<T>(str, option);
+
+        }
 
 
 

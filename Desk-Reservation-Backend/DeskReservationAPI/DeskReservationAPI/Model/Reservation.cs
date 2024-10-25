@@ -7,8 +7,8 @@ namespace DeskReservationAPI.Model
     {
         [Key]
         public int ReservationID { get; set; }
-        public virtual User User { get; set;}
-        public int UserID { get; set; }
+        public virtual User? User { get; set;}
+        public string UserID { get; set; }
 
         public virtual Desk Desk { get; set; }
         public int DeskID { get; set; }
@@ -34,7 +34,7 @@ namespace DeskReservationAPI.Model
 
 
 
-    public class Fixreservation :Reservation
+    public class FixReservation :Reservation
     {
         public bool? IsConfirmed { get; set; }
     }
