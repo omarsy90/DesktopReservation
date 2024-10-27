@@ -85,7 +85,7 @@ namespace DeskReservationAPITest
             //Assert
             string resContent = await _utility.GetContentFromResponse(response);
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
-            Assert.True(resContent.Contains(PreservedStringMessage.AlreadyOverlappedReservationMessage));
+            Assert.True(resContent.Contains(PreservedStringMessage.DeskAlreadyReserved));
 
         }
 

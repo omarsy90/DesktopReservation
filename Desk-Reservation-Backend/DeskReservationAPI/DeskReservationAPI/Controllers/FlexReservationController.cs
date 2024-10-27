@@ -47,7 +47,7 @@ namespace DeskReservationAPI.Controllers
         //  add new flex reservation
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateNewFlexReservation([FromBody] ReservationModel reservationModel)
+        public async Task<IActionResult> CreateNewFlexReservation([FromBody] FlexReservationModel reservationModel)
         {
             var user = await _authService.GetUser(HttpContext);
             if (user == null)
@@ -74,19 +74,14 @@ namespace DeskReservationAPI.Controllers
             {
                 return NotFound();
             }
-            // check if desk  reserved in  time requested
-            var reservations = await _reservationRepository.GetResevationsByDesk(reservationModel.DeskID);
-
-            var overlappedReservations = Helper.GetOverlappedReservations(reservations, reservationModel);
-            if (overlappedReservations != null && overlappedReservations.ToList().Count > 0)
+            // check if desk  reserved in  duration reservation
+            if (await IsDeskReserved(reservationModel))
             {
-                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.AlreadyOverlappedReservationMessage });
+                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.DeskAlreadyReserved });
             }
 
-            // check if the user has already reserved a desk in time reqsuted
-            var userReservations = await _reservationRepository.GetReservationsbyUserID(user.UserID.ToString().ToUpper());
-            var overlappedUserReservation = Helper.GetOverlappedReservations(userReservations, reservationModel);
-            if (overlappedUserReservation != null && overlappedReservations.ToList().Count > 0)
+            // check if the user has already reserved a desk in duration reservation
+            if (await DoesUserHasReservation(reservationModel, user.UserID.ToString()))
             {
                 return BadRequest(
                     new
@@ -116,7 +111,6 @@ namespace DeskReservationAPI.Controllers
             var reservation = await _reservationRepository.AddFlexReservation(flexReservation);
             string serialzedReservation = Helper.SerializeObject<Reservation>(reservation);
             return Ok(serialzedReservation);
-
         }
 
 
@@ -166,6 +160,33 @@ namespace DeskReservationAPI.Controllers
             await _reservationRepository.DeleteFlexreservation(id);
             return Ok(new { status = PreservedStringMessage.SuccessStatus, status_code = 200, message = $"reservation with id : {id} has been successfully deleted " });
         }
+
+        private async Task<bool> IsDeskReserved(FlexReservationModel model)
+        {
+            var reservations = await _reservationRepository.GetResevationsByDesk(model.DeskID);
+            var overlappedReservations = Helper.GetOverlappedReservations(reservations, model);
+
+            if (overlappedReservations != null && overlappedReservations.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private async Task<bool> DoesUserHasReservation(FlexReservationModel model, string userID)
+        {
+            var userReservations = await _reservationRepository.GetReservationsbyUserID(userID.ToUpper());
+            var overlappedUserReservation = Helper.GetOverlappedReservations(userReservations, model);
+
+            if (overlappedUserReservation != null && overlappedUserReservation.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
 
     }
 }

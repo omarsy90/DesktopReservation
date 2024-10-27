@@ -8,30 +8,31 @@ namespace DeskReservationAPI.Utility
     public static class Helper
     {
 
-        public static IEnumerable<Reservation> GetOverlappedReservations(IEnumerable<Reservation> reservations, ReservationModel reservation)
+        public static List<Reservation> GetOverlappedReservations(IEnumerable<Reservation> reservations, Reservation reservation)
         {
 
             
             var overlappedReservations = from res in reservations
-                                         where res.DateEnd >= reservation.DtStart
-                                         && res.DateStart <= reservation.DtEnd
+                                         where res.DateEnd >= reservation.DateStart
+                                         && res.DateStart <= reservation.DateEnd
                                          select res;
-            return overlappedReservations;
+            return overlappedReservations?.ToList();
         }
 
-
-        public static IEnumerable<Reservation> GetOverlappedReservations(IEnumerable<Reservation> reservations, Reservation reservation)
+        public static List<Reservation> GetOverlappedReservations(IEnumerable<Reservation> reservations, FlexReservationModel reservation)
         {
 
 
             var overlappedReservations = from res in reservations
-                                         where res.DateEnd >= reservation.DateStart
-                                         && res.DateStart <= reservation.DateEnd
+                                         where res.DateEnd >= reservation.DtStart
+                                         && res.DateStart <= reservation.DtEnd
                                          select res;
-            return overlappedReservations;
+            return overlappedReservations?.ToList();
         }
 
-      
+
+
+
 
 
         public static string SerializeObject<T>(T? obj)

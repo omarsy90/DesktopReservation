@@ -98,16 +98,18 @@ namespace DeskReservationAPI.Controllers
 
             }
 
-            reservationModel.DtEnd = reservationModel.DtStart.AddDays(90-1);
-            // check there is no overlapped confirmed  fix reservation
-            var confirmedReservations = await _reservationRepository.GetResevationsByDesk(desk.DeskID);
-            var overlappedReservations = Helper.GetOverlappedReservations(confirmedReservations, reservationModel);
-            if (overlappedReservations != null && overlappedReservations.ToList().Count > 0)
+            // check  if the desk not reseved  in duration of  reservation requested 
+            if( await IsDeskReserved(reservationModel))
             {
-                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.AlreadyOverlappedReservationMessage });
+                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.DeskAlreadyReserved });
+            }
+           
+            //check if user has already reservation in duration requested 
+            if( await DoesUserHasReservation(reservationModel,user.UserID.ToString()))
+            {
+                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.UserHasAlreadyReservationInTimeRequested });
             }
 
-            // no overlaped reservations
             FixReservation fixReservation = new FixReservation()
             {
                 UserID = user.UserID.ToString(),
@@ -158,9 +160,9 @@ namespace DeskReservationAPI.Controllers
 
             // avoid booking same desk for another user in booked period
 
-            if (! await CheckReservationConfirmation(reservation,confRequest.isConfirmed) )
+            if (await IsDeskReserved(reservation) )
             {
-                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.AlreadyOverlappedReservationMessage });
+                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.DeskAlreadyReserved });
             }
 
             await _reservationRepository.ConfirmFixReservation(reservationID, confRequest.isConfirmed);
@@ -187,18 +189,46 @@ namespace DeskReservationAPI.Controllers
         }
 
 
-        private async Task< bool> CheckReservationConfirmation(Reservation reservation , bool isConfirmed)
+        private async Task< bool> IsDeskReserved(ReservationModel model)
         {
-            var deskReservations = await _reservationRepository.GetConfirmedFixReservationByDeskID(reservation.DeskID);
-            var overlappedReservation = Helper.GetOverlappedReservations(deskReservations, reservation);
-            if (overlappedReservation != null && overlappedReservation.Count() > 0 && isConfirmed == true)
-            {
-                return false;
-            }
+            var confirmedReservations = await _reservationRepository.GetResevationsByDesk(model.DeskID);
+            var overlappedReservations = Helper.GetOverlappedReservations(confirmedReservations, new Reservation
+            { DeskID = model.DeskID, DateStart = model.DtStart, DateEnd = model.DtStart.AddDays(90 - 1) });
 
-            return true;
+            if (overlappedReservations != null && overlappedReservations.Count > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
+
+        private async Task<bool> IsDeskReserved(Reservation reservation)
+        {
+            var confirmedReservations = await _reservationRepository.GetResevationsByDesk(reservation.DeskID);
+            var overlappedReservations = Helper.GetOverlappedReservations(confirmedReservations, reservation);
+
+            if (overlappedReservations != null && overlappedReservations.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private async Task<bool>DoesUserHasReservation(ReservationModel model, string userID)
+        {
+            var userReservations = await _reservationRepository.GetReservationsbyUserID(userID);
+            var overlappedUserReservation = Helper.GetOverlappedReservations(userReservations, new Reservation
+            { DeskID = model.DeskID, DateStart = model.DtStart, DateEnd = model.DtStart.AddDays(90 - 1) });
+
+            if (overlappedUserReservation != null && overlappedUserReservation.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+      
     }
 
 
