@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.SqlServer.Server;
 
 namespace DeskReservationAPI.Utility
 {
@@ -46,7 +47,7 @@ namespace DeskReservationAPI.Utility
             {
                 ReferenceHandler = ReferenceHandler.IgnoreCycles
             };
-            string str = JsonSerializer.Serialize<T>(obj, option);
+            string str = JsonSerializer.Serialize<T>(obj,option);
             return str;
 
         }

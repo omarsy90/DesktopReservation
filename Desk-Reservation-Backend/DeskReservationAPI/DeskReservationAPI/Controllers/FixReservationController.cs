@@ -78,7 +78,7 @@ namespace DeskReservationAPI.Controllers
 
         // send request to fix reservation
         [HttpPost("request")]
-        public async Task<IActionResult> AddFixReservationRequest([FromBody] ReservationModel reservationModel)
+        public async Task<IActionResult> CreateFixReservationRequest([FromBody] ReservationModel reservationModel)
         {
             var user = await _authService.GetUser(HttpContext);
             if (user == null)
@@ -105,7 +105,7 @@ namespace DeskReservationAPI.Controllers
             }
            
             //check if user has already reservation in duration requested 
-            if( await DoesUserHasReservation(reservationModel,user.UserID.ToString()))
+            if( await DoesUserHasReservation(reservationModel,user.UserID.ToUpper()))
             {
                 return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.UserHasAlreadyReservationInTimeRequested });
             }
@@ -217,7 +217,7 @@ namespace DeskReservationAPI.Controllers
 
         private async Task<bool>DoesUserHasReservation(ReservationModel model, string userID)
         {
-            var userReservations = await _reservationRepository.GetReservationsbyUserID(userID);
+            var userReservations = await _reservationRepository.GetReservationsbyUserID(userID.ToUpper());
             var overlappedUserReservation = Helper.GetOverlappedReservations(userReservations, new Reservation
             { DeskID = model.DeskID, DateStart = model.DtStart, DateEnd = model.DtStart.AddDays(90 - 1) });
 

@@ -21,16 +21,14 @@ namespace DeskReservationAPI.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
-        ITokenManager _tokenGenerator;
-        IUserRepository _userRepository;
+        private IAuthenticationService _authService;
         private PasswordEncoder _passwordEncoder;
         private EmailTextChecker _emailTextChecker;
-        public UserController(ITokenManager tokenGenerator, IUserRepository userRepository)
+        public UserController( IAuthenticationService authService)
         {
-            _tokenGenerator = tokenGenerator;
-            _userRepository = userRepository;
             _passwordEncoder = new PasswordEncoder();
             _emailTextChecker = new EmailTextChecker();
+            _authService = authService;
         }
 
         [HttpPost("login")]
@@ -44,16 +42,16 @@ namespace DeskReservationAPI.Controllers
             string encodedPass = _passwordEncoder.Encode(model.Password);
          
 
-            if (!await _userRepository.IsUserExist(model.Email,encodedPass )) 
+            if (!await _authService.IsUserRegistered(model.Email,encodedPass )) 
             {
                 return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.EmailOrPasswordIncorrectMsg });
             }
 
-            var user = await _userRepository.GetUser(model.Email, encodedPass);
+            var user = await _authService.GetUser(model.Email, encodedPass);
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
             dic.Add("id", user.UserID.ToString());
-            string token = _tokenGenerator.GetToken(dic);
+            string token = _authService.GetToken(dic);
             return Ok(new { status = PreservedStringMessage.SuccessStatus, status_code = 200, token = token });
         }
 
@@ -72,7 +70,7 @@ namespace DeskReservationAPI.Controllers
                 return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.EmailTypingInCorrect });
             }
 
-            if (await _userRepository.IsEmailExist(model.Email))
+            if (await _authService.IsEmailRegistered(model.Email))
             {
                 return BadRequest(new {status= PreservedStringMessage.FailedStatus, status_code =400, message= PreservedStringMessage.EmailExist });
             }
@@ -84,13 +82,13 @@ namespace DeskReservationAPI.Controllers
                 Department = model.Department,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                RoleID = await _userRepository.GetRoleID(RoleName.NormalUser),
-                UserID = Guid.NewGuid(),
+                RoleID = await _authService.GetRoleID(RoleName.NormalUser),
+                UserID = Guid.NewGuid().ToString(),
 
             };
 
-            bool isvalid = await _userRepository.AddUser(user);
-            if (!isvalid)
+            User persistedUser = await _authService.AddUser(user);
+            if (persistedUser == null)
             {
                 return Problem(PreservedStringMessage.SeverErrorWhileCreatingUser);
             }

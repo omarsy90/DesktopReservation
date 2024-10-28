@@ -6,14 +6,11 @@ namespace DeskReservationAPI.Repository
 {
     public interface IUserRepository
     {
-        Task<Role> GetUserRole(string email, string passowd);
-        Task<bool> IsUserAdmin(string email, string password);
-        Task<bool> IsUserExist(string email, string password);
-        Task<bool> IsEmailExist(string email);
-        Task<bool> AddUser(User user);
+        Task<Role> GetUserRole(string email, string passowd);  
+        Task<User> GetUserByEmail(string email);
+        Task<User> AddUser(User user);
         Task<User> GetUser(string email, string password);
         Task<int> GetRoleID(string RoleName);
-        Task<bool> IsUserAdmin(string userID);
         Task<User> GetUserByID(string UserID);
     }
 
@@ -25,17 +22,9 @@ namespace DeskReservationAPI.Repository
             _dbContext = dBContext;
         }
 
-        public async Task<bool> IsUserExist(string email, string password)
-        {
-            User user = await _dbContext.Users.FirstOrDefaultAsync(us => us.Email == email && us.Password == password);
-            return user != null;
-        }
+      
 
-        public async Task<bool> IsUserAdmin(string email, string password)
-        {
-            User user = await _dbContext.Users.Include(us => us.Role).FirstOrDefaultAsync(us => us.Email == email && us.Password == password && us.Role.Name == RoleName.Admin);
-            return user != null;
-        }
+       
 
         public async Task<Role> GetUserRole(string email, string passowd)
         {
@@ -49,12 +38,12 @@ namespace DeskReservationAPI.Repository
         {
             return await  _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
-        public async Task<bool> AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
             if(user == null) throw new ArgumentNullException(nameof(user));
              _dbContext.Add(user);
-           int state =   await _dbContext.SaveChangesAsync();
-             return state > 0;
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
 
         public async Task<int> GetRoleID(string RoleName)
@@ -65,30 +54,20 @@ namespace DeskReservationAPI.Repository
 
         }
 
-        public async Task<bool> IsEmailExist(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(u=>u.Email == email);
-            return user != null;
+            return user;
         }
 
-        public async Task<bool> IsUserAdmin(string userID)
+    
+
+
+        public async Task<User> GetUserByID(string userID)
         {
-            var user = await _dbContext.Users.Include(u=>u.Role).FirstOrDefaultAsync(us => us.UserID.ToString() == userID);
-            if(user == null)  return false;
-
-           return  user.Role.Name == RoleName.Admin;
-            
+           
+            return  await  _dbContext.Users.Include(us=>us.Role).FirstOrDefaultAsync(us=>us.UserID == userID);
         }
-
-        public async Task<User> GetUserByID(string UserID)
-        {
-            return  await  _dbContext.Users.Include(u=>u.Role).FirstOrDefaultAsync(us=>us.UserID.ToString() == UserID);
-        }
-
-        public class RoleName
-        {
-            public static string NormalUser = "user";
-            public static string Admin = "admin";
-        }
+      
     }
 }

@@ -10,7 +10,9 @@ namespace DeskReservationAPI.Model
         public int DeskID { set; get; }
         public string Label {  set; get; }
         public string Map { set; get; }  // image url
-        
+
+
+        [ForeignKey("OfficeID")]
         public virtual Office Office { set; get; }
         public int OfficeID { set; get; }
 

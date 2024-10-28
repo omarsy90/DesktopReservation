@@ -44,7 +44,7 @@ namespace DeskReservationAPI.Model
                SeededData.AdminUser
                 );
 
-         
+
 
             modelBuilder.Entity<Equipment>().HasData
                 (
@@ -62,12 +62,16 @@ namespace DeskReservationAPI.Model
                SeededData.FlexReservations
                 );
 
+            modelBuilder.Entity<Comment>().HasData
+                (
+                  SeededData.Comments
+                );
 
         }
 
-      
 
-     
+
+
 
 
         public DbSet<Comment> Comments { get; set; }

@@ -1,4 +1,5 @@
 ﻿using DeskReservationAPI.Model;
+using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeskReservationAPI.Repository
@@ -81,7 +82,7 @@ namespace DeskReservationAPI.Repository
         {
             await _dbContext.FixReservations.AddAsync(fixReservation);
            await _dbContext.SaveChangesAsync();
-            return fixReservation;
+            return await _dbContext.FixReservations.AsNoTracking().Include(fr => fr.Desk).Include(fr => fr.Desk.Office).FirstOrDefaultAsync(fr => fr.ReservationID == fixReservation.ReservationID);
         }
 
        

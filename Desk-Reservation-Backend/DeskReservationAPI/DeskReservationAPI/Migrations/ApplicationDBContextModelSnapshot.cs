@@ -55,19 +55,51 @@ namespace DeskReservationAPI.Migrations
                     b.Property<int>("DeskID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserID1")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CommentID");
 
                     b.HasIndex("DeskID");
 
-                    b.HasIndex("UserID1");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            CommentID = 1,
+                            CommentTxt = "headset not available",
+                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 730, DateTimeKind.Local).AddTicks(4795),
+                            DeskID = 1,
+                            UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A"
+                        },
+                        new
+                        {
+                            CommentID = 2,
+                            CommentTxt = "screen should be bigger",
+                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 732, DateTimeKind.Local).AddTicks(6997),
+                            DeskID = 2,
+                            UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A"
+                        },
+                        new
+                        {
+                            CommentID = 3,
+                            CommentTxt = "chair should be movable",
+                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 732, DateTimeKind.Local).AddTicks(7021),
+                            DeskID = 2,
+                            UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D"
+                        },
+                        new
+                        {
+                            CommentID = 4,
+                            CommentTxt = "good infrastructured",
+                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 732, DateTimeKind.Local).AddTicks(7025),
+                            DeskID = 3,
+                            UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D"
+                        });
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Desk", b =>
@@ -597,19 +629,12 @@ namespace DeskReservationAPI.Migrations
 
                     b.Property<string>("UserID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("UserID1")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("isFavourited")
                         .HasColumnType("bit");
 
                     b.HasKey("ReservationID");
-
-                    b.HasIndex("DeskID");
-
-                    b.HasIndex("UserID1");
 
                     b.ToTable("Reservation");
 
@@ -649,8 +674,8 @@ namespace DeskReservationAPI.Migrations
 
             modelBuilder.Entity("DeskReservationAPI.Model.User", b =>
                 {
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Department")
                         .IsRequired()
@@ -684,7 +709,7 @@ namespace DeskReservationAPI.Migrations
                     b.HasData(
                         new
                         {
-                            UserID = new Guid("b490ad07-7670-4b7b-8b78-e0176fa9ec4a"),
+                            UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A",
                             Department = "dep",
                             Email = "user@gmail.com",
                             FirstName = "user",
@@ -694,7 +719,7 @@ namespace DeskReservationAPI.Migrations
                         },
                         new
                         {
-                            UserID = new Guid("86c4c6c0-a30f-4595-968d-3ef3e09e9f6d"),
+                            UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D",
                             Department = "dep",
                             Email = "user2@gmail.com",
                             FirstName = "user2",
@@ -704,7 +729,7 @@ namespace DeskReservationAPI.Migrations
                         },
                         new
                         {
-                            UserID = new Guid("66afef1e-0253-45f4-9968-6072073ad6c6"),
+                            UserID = "66AFEF1E-0253-45F4-9968-6072073AD6C6",
                             Department = "dep",
                             Email = "admin@gmail.com",
                             FirstName = "admin",
@@ -720,6 +745,10 @@ namespace DeskReservationAPI.Migrations
 
                     b.Property<bool?>("IsConfirmed")
                         .HasColumnType("bit");
+
+                    b.HasIndex("DeskID");
+
+                    b.HasIndex("UserID");
 
                     b.HasDiscriminator().HasValue("fix");
 
@@ -767,6 +796,10 @@ namespace DeskReservationAPI.Migrations
             modelBuilder.Entity("DeskReservationAPI.Model.FlexReservation", b =>
                 {
                     b.HasBaseType("DeskReservationAPI.Model.Reservation");
+
+                    b.HasIndex("DeskID");
+
+                    b.HasIndex("UserID");
 
                     b.HasDiscriminator().HasValue("flex");
 
@@ -825,7 +858,7 @@ namespace DeskReservationAPI.Migrations
 
                     b.HasOne("DeskReservationAPI.Model.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID1")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -845,23 +878,6 @@ namespace DeskReservationAPI.Migrations
                     b.Navigation("Office");
                 });
 
-            modelBuilder.Entity("DeskReservationAPI.Model.Reservation", b =>
-                {
-                    b.HasOne("DeskReservationAPI.Model.Desk", "Desk")
-                        .WithMany()
-                        .HasForeignKey("DeskID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DeskReservationAPI.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID1");
-
-                    b.Navigation("Desk");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DeskReservationAPI.Model.User", b =>
                 {
                     b.HasOne("DeskReservationAPI.Model.Role", "Role")
@@ -871,6 +887,44 @@ namespace DeskReservationAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("DeskReservationAPI.Model.FixReservation", b =>
+                {
+                    b.HasOne("DeskReservationAPI.Model.Desk", "Desk")
+                        .WithMany()
+                        .HasForeignKey("DeskID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DeskReservationAPI.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Desk");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DeskReservationAPI.Model.FlexReservation", b =>
+                {
+                    b.HasOne("DeskReservationAPI.Model.Desk", "Desk")
+                        .WithMany()
+                        .HasForeignKey("DeskID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DeskReservationAPI.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Desk");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DeskReservationAPI.Model.Role", b =>

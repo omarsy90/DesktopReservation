@@ -7,8 +7,12 @@ namespace DeskReservationAPI.Model
     {
         [Key]
         public int CommentID { get; set; }
+
+        [ForeignKey("UserID")]
         public virtual User User { get; set; }
-        public  int UserID { get; set;}
+        public  string UserID { get; set;}
+
+        [ForeignKey("DeskID")]
         public virtual Desk Desk { get; set; }
         public  int DeskID { get;  set; }
 

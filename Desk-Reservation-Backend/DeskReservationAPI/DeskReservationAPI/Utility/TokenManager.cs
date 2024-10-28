@@ -7,17 +7,9 @@ using System.Text;
 
 namespace DeskReservationAPI.Utility
 {
-    public interface ITokenManager
-    {
-        SymmetricSecurityKey GetSymmetricSecurityKey();
-        string GetToken(Dictionary<string, string> keyValuePairs);
+  
 
-        public string GetClaimByKey(string token, string key);
-
-
-    }
-
-    public class TokenManager : ITokenManager
+    public class TokenManager 
     {
 
 
@@ -89,8 +81,8 @@ namespace DeskReservationAPI.Utility
                 claimDic.Add(item.Type, item.Value);
             }
 
-            claimDic.TryGetValue(key, out string userID);
-            return userID;
+            claimDic.TryGetValue(key, out string value);
+            return value;
         }
       
     }

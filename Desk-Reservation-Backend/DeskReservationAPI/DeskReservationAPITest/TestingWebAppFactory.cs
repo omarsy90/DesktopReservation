@@ -92,14 +92,14 @@ namespace DeskReservationAPITest
 
                 };
                 services.AddScoped<IUserRepository, UserRepository>();
-                services.AddSingleton<ITokenManager>(tokenGenerator);
+                services.AddSingleton<TokenManager>(tokenGenerator);
                 services.AddScoped<IDeskRepository, DeskRepository>();
                 services.AddScoped<IOfficeRepository, OfficeRepository>();
                 services.AddScoped<IEquipmentRepository, EquipmentRepository>();
                 services.AddScoped<IFixReservationRepository, FixReservationRepository>();
                 services.AddScoped<IDeskRepository,DeskRepository>();
                 services.AddScoped<IFlexReservationRepository, FlexReservationRepository>();
-                services.AddScoped<AuthenticationService>();
+                services.AddScoped<IAuthenticationService,AuthenticationService>();
                
             });
         }

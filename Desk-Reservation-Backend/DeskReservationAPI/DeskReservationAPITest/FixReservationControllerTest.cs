@@ -30,7 +30,7 @@ namespace DeskReservationAPITest
 
 
         [Fact]
-        public async Task AddFixReservationRequest_NoOverlappedReservation_ReturnOk()
+        public async Task CreateFixReservationRequest_NoOverlappedReservation_ReturnOk()
         {
 
             //Arrange
@@ -62,7 +62,7 @@ namespace DeskReservationAPITest
 
 
         [Fact]
-        public async Task AddFixReservationRequest_ThereIsOverlappedReservation_ReturnBadRequest()
+        public async Task CreateFixReservationRequest_ThereIsOverlappedReservation_ReturnBadRequest()
         {
             //Arrange
             var res = await _utility.Login(new LoginModel
@@ -90,7 +90,32 @@ namespace DeskReservationAPITest
         }
 
 
+        [Fact]
+        public async Task CreateFixReservationRequest_UserHasAlreadyReservationInDurationRequested_ReturnBadRequest()
+        {
+            //Arrange
+            var loginReseponse = await _utility.Login(new LoginModel
+            {
+                Email = SeededData.User1.Email,
+                Password = SeededData.User1Pass
+            });
+            string token = await _utility.ExtractToken(loginReseponse);
+            ReservationModel model = new ReservationModel()
+            {
+                DeskID = 5,
+                DtStart = DateTime.Parse("2024-12-29"),
+                isFavourited = true
+            };
+            //Action
+            var response = await SendFixReservationRequest(model, token);
 
+            //Assert
+            string resContent = await _utility.GetContentFromResponse(response);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
+            Assert.True(resContent.Contains(PreservedStringMessage.UserHasAlreadyReservationInTimeRequested));
+
+
+        }
 
         [Fact]
         public async Task ConfirmFixReservation_UserIsAdminAndValidReservationID_ReturnOk()
