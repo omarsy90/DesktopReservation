@@ -16,7 +16,7 @@ namespace DeskReservationAPI.Utility
         private JWTSetting _jwtSetting;
 
         private TokenValidationParameters _tokenValidationParameters;
-        private SymmetricSecurityKey _symmetricSecurityKey;
+        public readonly SymmetricSecurityKey _symmetricSecurityKey;
         private SigningCredentials _signingCredentials;
         public TokenManager(JWTSetting jwtSetting)
         {
@@ -41,10 +41,7 @@ namespace DeskReservationAPI.Utility
         }
 
 
-        public SymmetricSecurityKey GetSymmetricSecurityKey()
-        {
-            return _symmetricSecurityKey;
-        }
+      
         public string GetToken(Dictionary<string, string> keyValuePairs)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -61,7 +58,6 @@ namespace DeskReservationAPI.Utility
             {
                 Audience = _jwtSetting.Audience,
                 Issuer = _jwtSetting.Issuer,
-
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddDays(_jwtSetting.DurationOnDays),
                 SigningCredentials = _signingCredentials

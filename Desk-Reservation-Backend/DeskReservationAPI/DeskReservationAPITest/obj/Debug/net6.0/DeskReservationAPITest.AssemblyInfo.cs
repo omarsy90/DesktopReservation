@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DeskReservationAPITest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2da5c9b76530000c96fb16b2d2136eeb3396a49")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25b1fc12b63568e5f7618a3c90107361c0db35de")]
 [assembly: System.Reflection.AssemblyProductAttribute("DeskReservationAPITest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DeskReservationAPITest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

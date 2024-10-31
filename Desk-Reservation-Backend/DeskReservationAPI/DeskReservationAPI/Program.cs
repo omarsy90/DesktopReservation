@@ -114,7 +114,7 @@ namespace DeskReservationAPI
                 {
                     ValidAlgorithms = new[] { jWTSetting.SecurityAlgorithm },
                     ValidateIssuerSigningKey = jWTSetting.ValidateIssuerSigningKey,
-                    IssuerSigningKey = tokenManager.GetSymmetricSecurityKey(),
+                    IssuerSigningKey = tokenManager._symmetricSecurityKey,
                     ValidateIssuer = jWTSetting.ValidateIssuer,
                     ValidateAudience = jWTSetting.ValidateAudience,
                     ClockSkew = jWTSetting.ClockSkew,
