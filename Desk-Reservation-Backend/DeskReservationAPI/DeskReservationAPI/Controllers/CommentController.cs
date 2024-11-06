@@ -4,6 +4,8 @@ using DeskReservationAPI.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace DeskReservationAPI.Controllers
 {
@@ -14,40 +16,50 @@ namespace DeskReservationAPI.Controllers
     public class CommentController : Controller
     {
         private ICommentRepository _commentRepository;
-        private AuthenticationService _authService;
-        public CommentController(ICommentRepository commentRepository , AuthenticationService authentication)
+        private IAuthenticationService _authService;
+        private IDeskRepository _deskRepository;
+        public CommentController(ICommentRepository commentRepository,
+            IAuthenticationService authentication
+            , IDeskRepository deskRepository)
         {
             _commentRepository = commentRepository;
             _authService = authentication;
-            
+            _deskRepository = deskRepository;
+
         }
 
         [HttpGet("")]
-        public async  Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-           var comments =  await _commentRepository.GetComments();
+            var comments = await _commentRepository.GetComments();
             return Ok(comments);
         }
 
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> Index(int commentID)
+        public async Task<IActionResult> Index(int id)
         {
-            var comment = await _commentRepository.GetCommentByID(commentID);
+            var comment = await _commentRepository.GetCommentByID(id);
             return Ok(comment);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateComment([FromBody] CommentModel model)
+        [HttpPost("")]
+        public async Task<IActionResult> Index([FromBody] CommentModel model)
         {
             var user = await _authService.GetUser(this.HttpContext);
-            if(user == null)
+            if (user == null)
             {
-                return Unauthorized( new {status= PreservedStringMessage.FailedStatus, status_code=401,message="user not valid"});
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "user not valid" });
             }
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            var Desk = await _deskRepository.GetDeskByID(model.DeskID);
+            if (Desk == null)
+            {
+                return NotFound(new {status=PreservedStringMessage.FailedStatus,status_code=404, message="Desk not found" });
             }
 
             Comment comment = new Comment
@@ -58,7 +70,9 @@ namespace DeskReservationAPI.Controllers
                 CommentedAt = DateTime.Now,
             };
             var persistedComment = await _commentRepository.Add(comment);
-            return Ok(persistedComment);
+
+            string serializedComment = Helper.SerializeObject<Comment>(persistedComment);
+            return Ok(serializedComment);
         }
     }
 }

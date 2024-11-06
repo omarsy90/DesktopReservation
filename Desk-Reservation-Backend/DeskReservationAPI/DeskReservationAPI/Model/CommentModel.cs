@@ -5,6 +5,7 @@ namespace DeskReservationAPI.Model
     public class CommentModel
     {
         [Required]
+        [Range(1,int.MaxValue)]
         public int DeskID { get; set; }
 
         [Required]

@@ -16,13 +16,13 @@ namespace DeskReservationAPI.Controllers
     public class FixReservationController : Controller
     {
 
-        private readonly AuthenticationService _authService;
+        private readonly IAuthenticationService _authService;
         private readonly IFixReservationRepository _reservationRepository;
         private readonly IDeskRepository _deskRepository;
 
         public FixReservationController
             (
-            AuthenticationService authService,
+            IAuthenticationService authService,
             IFixReservationRepository reservationRepository,
             IDeskRepository deskRepository)
         {
@@ -126,7 +126,11 @@ namespace DeskReservationAPI.Controllers
         }
 
 
-
+        /// <summary>
+        /// get Fix Reservation with given ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetReservationByID(int id)
         {

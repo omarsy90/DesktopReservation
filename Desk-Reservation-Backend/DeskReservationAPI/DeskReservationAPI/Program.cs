@@ -36,7 +36,8 @@ namespace DeskReservationAPI
             builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             builder.Services.AddScoped<IFixReservationRepository, FixReservationRepository>();
             builder.Services.AddScoped<IFlexReservationRepository,FlexReservationRepository>();
-            builder.Services.AddScoped<AuthenticationService>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
            
  
 

@@ -13,12 +13,12 @@ namespace DeskReservationAPI.Controllers
     public class FlexReservationController : Controller
     {
 
-        private readonly AuthenticationService _authService;
+        private readonly IAuthenticationService _authService;
         private readonly IFlexReservationRepository _reservationRepository;
         private readonly IDeskRepository _deskRepository;
         public FlexReservationController
             (
-            AuthenticationService authService,
+            IAuthenticationService authService,
             IFlexReservationRepository reservationRepository,
             IDeskRepository deskRepository)
         {
@@ -39,7 +39,8 @@ namespace DeskReservationAPI.Controllers
                 return NotFound();
             }
             var flexreservations = await _reservationRepository.GetFlexReservationByUserID(user.UserID.ToString());
-            return Ok(flexreservations);
+            var str = Helper.SerializeObject(flexreservations);
+            return Ok(str);
 
 
         }
@@ -122,7 +123,9 @@ namespace DeskReservationAPI.Controllers
             if (reservation == null)
             {
                 return NotFound($"Reservation with id {id} not found ");
-            }
+            };
+
+            var str = Helper.SerializeObject(reservation);
             return Ok(reservation);
         }
 

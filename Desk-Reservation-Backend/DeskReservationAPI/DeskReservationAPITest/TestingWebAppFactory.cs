@@ -99,6 +99,7 @@ namespace DeskReservationAPITest
                 services.AddScoped<IFixReservationRepository, FixReservationRepository>();
                 services.AddScoped<IDeskRepository,DeskRepository>();
                 services.AddScoped<IFlexReservationRepository, FlexReservationRepository>();
+                services.AddScoped<ICommentRepository, CommentRepository>();
                 services.AddScoped<IAuthenticationService,AuthenticationService>();
                
             });

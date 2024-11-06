@@ -15,14 +15,14 @@ namespace DeskReservationAPITest
     {
         HttpClient _client;
         Utility _utility;
-        PasswordEncoder _encoder;
+      
         string FlexReservationEndPoint = Utility.BasicUrl + "/FlexReservation";
 
         public FlexReservationControllerTest(TestingWebAppFactory<Program> factory)
         {
             _client = factory.CreateClient();
             _utility = new Utility(_client);
-            _encoder = new PasswordEncoder();
+          
 
         }
 

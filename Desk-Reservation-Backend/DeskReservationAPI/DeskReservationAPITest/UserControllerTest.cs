@@ -16,12 +16,12 @@ namespace DeskReservationAPITest
         private readonly HttpClient _client;
         int port = 7070;
 
-        string BasicUrl;
+        string endpoint = Utility.BasicUrl+"/User";
 
         public UserControllerTest(TestingWebAppFactory<Program> factory)
         {
             _client = factory.CreateClient();
-            BasicUrl = $"https://localhost:{port}/User";
+            endpoint = $"https://localhost:{port}/User";
         }
 
 
@@ -189,7 +189,7 @@ namespace DeskReservationAPITest
         {
             string jsonStr = JsonSerializer.Serialize(model);
             StringContent content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{BasicUrl}/login", content);
+            var response = await _client.PostAsync($"{endpoint}/login", content);
             return response;
         }
 
@@ -198,7 +198,7 @@ namespace DeskReservationAPITest
         {
             string jsonStr = JsonSerializer.Serialize(model);
             StringContent content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{BasicUrl}/register", content);
+            var response = await _client.PostAsync($"{endpoint}/register", content);
             return response;
         }
 
@@ -207,7 +207,7 @@ namespace DeskReservationAPITest
         {
             string jsonStr = JsonSerializer.Serialize(registerModel);
             StringContent content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{BasicUrl}/register", content);
+            var response = await _client.PostAsync($"{endpoint}/register", content);
         }
 
     }

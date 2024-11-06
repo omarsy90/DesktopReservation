@@ -19,11 +19,11 @@ namespace DeskReservationAPI.Controllers
         private readonly IDeskRepository _deskRepository;
         private readonly IOfficeRepository _officeRepository;
         private readonly IEquipmentRepository _equipmentRepository;
-        private readonly AuthenticationService _authService;
+        private readonly IAuthenticationService _authService;
         public DeskController(IDeskRepository deskRepository
             , IOfficeRepository officeRepository
             , IEquipmentRepository equipmentRepository
-            ,AuthenticationService authService)
+            ,IAuthenticationService authService)
         {
             _deskRepository = deskRepository;
             _officeRepository = officeRepository;
