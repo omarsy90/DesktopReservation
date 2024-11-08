@@ -49,7 +49,7 @@ namespace DeskReservationAPI.Controllers
             var user = await _authService.GetUser(this.HttpContext);
             if (user == null)
             {
-                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "user not valid" });
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.UserNotValid });
             }
             if (!ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace DeskReservationAPI.Controllers
             var Desk = await _deskRepository.GetDeskByID(model.DeskID);
             if (Desk == null)
             {
-                return NotFound(new {status=PreservedStringMessage.FailedStatus,status_code=404, message="Desk not found" });
+                return NotFound(new {status=PreservedStringMessage.FailedStatus,status_code=404, message= PreservedStringMessage.DeskNotFound });
             }
 
             Comment comment = new Comment

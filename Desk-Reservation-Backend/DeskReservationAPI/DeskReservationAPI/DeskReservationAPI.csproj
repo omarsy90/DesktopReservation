@@ -21,11 +21,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Source\" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<InternalsVisibleTo Include="DeskReservationAPI" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Asset\file\" />
 	</ItemGroup>
 </Project>

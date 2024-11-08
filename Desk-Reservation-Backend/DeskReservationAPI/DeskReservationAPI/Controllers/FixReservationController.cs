@@ -37,7 +37,11 @@ namespace DeskReservationAPI.Controllers
 
 
 
-        //get fix reservation confirmed(true/false) for user
+    
+        /// <summary>
+        /// get user's fixReservation confirmed(accepted or rejected)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("confirmed")]
         public async Task<IActionResult> GetFixReservationConfirmed()
         {
@@ -45,7 +49,7 @@ namespace DeskReservationAPI.Controllers
 
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized(new {status=PreservedStringMessage.FailedStatus ,status_code=401 , message =PreservedStringMessage.UserNotValid});
             }
             var fixReservations = await _reservationRepository.GetFixReservationConfirmedByUserID(user.UserID.ToString());
             string jsonStr = Helper.SerializeObject<IEnumerable<FixReservation>>((IEnumerable<FixReservation>)fixReservations);
@@ -56,7 +60,12 @@ namespace DeskReservationAPI.Controllers
 
 
 
-        // get fix reservation requests  for user
+       
+
+        /// <summary>
+        /// get user's fixReservation-requests
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("request")]
         public async Task<IActionResult> GetFixReservationRequests()
         {
@@ -64,9 +73,9 @@ namespace DeskReservationAPI.Controllers
 
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.UserNotValid });
             }
-            var fixRequests = await _reservationRepository.GetFixReservationRequest();
+            var fixRequests = await _reservationRepository.GetFixReservationRequestByUserID(user.UserID);
             string jsonStr = Helper.SerializeObject<IEnumerable<FixReservation>>((IEnumerable<FixReservation>)fixRequests);
             return Ok(jsonStr);
         }
@@ -76,14 +85,20 @@ namespace DeskReservationAPI.Controllers
 
 
 
-        // send request to fix reservation
+        
+
+        /// <summary>
+        /// send request for fix reservation.
+        /// </summary>
+        /// <param name="reservationModel"></param>
+        /// <returns></returns>
         [HttpPost("request")]
         public async Task<IActionResult> CreateFixReservationRequest([FromBody] ReservationModel reservationModel)
         {
             var user = await _authService.GetUser(HttpContext);
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.UserNotValid });
             }
 
             if (!ModelState.IsValid)
@@ -127,10 +142,10 @@ namespace DeskReservationAPI.Controllers
 
 
         /// <summary>
-        /// get Fix Reservation with given ID
+        /// get fix reservation with given ID
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>fix reservation</returns>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetReservationByID(int id)
         {
@@ -138,7 +153,7 @@ namespace DeskReservationAPI.Controllers
             var reservation = await _reservationRepository.GetFixReservationByID(id);
             if (reservation == null)
             {
-                return NotFound(reservation);
+                return NotFound(new {status= PreservedStringMessage.FailedStatus , status_code=404 , message=PreservedStringMessage.ReservationNotFound});
             }
             var str = Helper.SerializeObject<FixReservation>((FixReservation)reservation);
             return Ok(str);
@@ -146,20 +161,26 @@ namespace DeskReservationAPI.Controllers
 
 
 
-        // confirm  fix reservation request with true or false  
+      
+        /// <summary>
+        /// confirm fix reservation with true or false . this endpoint intends to be used for admin rule.
+        /// </summary>
+        /// <param name="reservationID"></param>
+        /// <param name="confRequest"></param>
+        /// <returns>reservation  confirmed</returns>
         [HttpPost("request/{reservationID:int}")]
         public async Task<IActionResult> ConfirmFixReservation(int reservationID, [FromBody] ConfirmReservationRequest confRequest)
         {
             var isAdmin = await _authService.AuthenticateAdmin(HttpContext);
             if (isAdmin == false)
             {
-                return Unauthorized();
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.UserHasNoAdminRole });
             }
 
             var reservation = await _reservationRepository.GetFixReservationByID(reservationID);
             if (reservation == null)
             {
-                return NotFound(reservationID);
+                return NotFound(new { status = PreservedStringMessage.FailedStatus, status_code = 404, message = PreservedStringMessage.ReservationNotFound });
             }
 
             // avoid booking same desk for another user in booked period
@@ -170,14 +191,18 @@ namespace DeskReservationAPI.Controllers
             }
 
             await _reservationRepository.ConfirmFixReservation(reservationID, confRequest.isConfirmed);
-            var str = Helper.SerializeObject<FixReservation>((FixReservation)reservation);
-            return Ok(reservation);
+            var str = Helper.SerializeObject(reservation);
+            return Ok(str);
         }
 
 
 
 
-        // get fix reservation  that not confirmed yet for all user
+  
+        /// <summary>
+        /// get all fix resevation that not confirmed( accepted or rejected) for all user .this endpoint intends to be used for admin rule
+        /// </summary>
+        /// <returns> all fix reservation requests</returns>
         [HttpGet("request/all")]
         public async Task<IActionResult> GetAllFixReservationRequests()
         {

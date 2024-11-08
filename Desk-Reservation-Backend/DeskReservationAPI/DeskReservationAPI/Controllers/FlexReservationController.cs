@@ -36,7 +36,7 @@ namespace DeskReservationAPI.Controllers
             var user = await _authService.GetUser(HttpContext);
             if (user == null)
             {
-                return NotFound();
+                return Unauthorized(new {status=PreservedStringMessage.FailedStatus , status_code=401 , message=PreservedStringMessage.UserNotValid});
             }
             var flexreservations = await _reservationRepository.GetFlexReservationByUserID(user.UserID.ToString());
             var str = Helper.SerializeObject(flexreservations);
@@ -53,7 +53,7 @@ namespace DeskReservationAPI.Controllers
             var user = await _authService.GetUser(HttpContext);
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.UserNotValid });
             }
 
             if (!ModelState.IsValid)
@@ -62,7 +62,7 @@ namespace DeskReservationAPI.Controllers
             }
             if (reservationModel.DtStart == DateTime.MinValue || reservationModel.DtEnd == DateTime.MinValue)
             {
-                return BadRequest();
+                return BadRequest(new {status=PreservedStringMessage.FailedStatus,status_code=400, message=PreservedStringMessage.StartDtOrEndDtNotSet});
             }
 
             if (reservationModel.DtEnd == null || string.IsNullOrEmpty(reservationModel.DtEnd.ToString()))
@@ -73,7 +73,7 @@ namespace DeskReservationAPI.Controllers
             var des = await _deskRepository.GetDeskByID(reservationModel.DeskID);
             if (des == null)
             {
-                return NotFound();
+                return NotFound(new {status= PreservedStringMessage.FailedStatus, status_code =404, message = PreservedStringMessage.DeskNotFound});
             }
             // check if desk  reserved in  duration reservation
             if (await IsDeskReserved(reservationModel))
@@ -122,11 +122,11 @@ namespace DeskReservationAPI.Controllers
             var reservation = await _reservationRepository.GetFlexReservationByID(id);
             if (reservation == null)
             {
-                return NotFound($"Reservation with id {id} not found ");
+                return NotFound(new {status=PreservedStringMessage.FailedStatus, status_code=404, message=PreservedStringMessage.ReservationNotFound});
             };
 
             var str = Helper.SerializeObject(reservation);
-            return Ok(reservation);
+            return Ok(str);
         }
 
 
@@ -136,32 +136,32 @@ namespace DeskReservationAPI.Controllers
             var reservation = await _reservationRepository.GetFlexReservationByID(id);
             if (reservation == null)
             {
-                return NotFound($"Reservation with id {id} not found ");
+                return NotFound(new { status = PreservedStringMessage.FailedStatus , status_code=404, message= PreservedStringMessage.ReservationNotFound});
             }
 
             var user = await _authService.GetUser(this.HttpContext);
             if (user.UserID.ToString().ToUpper() != reservation.UserID.ToUpper())
             {
-                return Unauthorized();
+                return Unauthorized( new { status = PreservedStringMessage.FailedStatus, status_code= 401 , message=PreservedStringMessage.UserNotValid} );
             }
 
             var cancellingDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
             // the cancelling time after  reservation has finished ->  not allowed
             if (reservation.DateEnd < cancellingDate)
             {
-                return BadRequest();
+                return BadRequest(new {status= PreservedStringMessage.FailedStatus , status_code=400 , message=PreservedStringMessage.CancellingTimeShouldSetBeforeFinishingReservation});
             }
 
             // the cancelling time during occupation the desk  -> not allowed
             if (reservation.DateEnd >= cancellingDate && reservation.DateStart <= cancellingDate)
             {
-                return BadRequest();
+                return BadRequest(new {status=PreservedStringMessage.FailedStatus , status_code=400,message = PreservedStringMessage.CancellingTimeNotAllowedDuringOccupation});
             }
 
 
             // the cancelling time before resservation has started -> allowed 
             await _reservationRepository.DeleteFlexreservation(id);
-            return Ok(new { status = PreservedStringMessage.SuccessStatus, status_code = 200, message = $"reservation with id : {id} has been successfully deleted " });
+            return Ok(new { status = PreservedStringMessage.SuccessStatus, status_code = 200, message = PreservedStringMessage.ReservationSuccessfullyDeleted });
         }
 
         private async Task<bool> IsDeskReserved(FlexReservationModel model)

@@ -51,7 +51,7 @@ namespace DeskReservationAPI.Controllers
             var desk = await _deskRepository.GetDeskByID(id);
             if (desk == null)
             {
-                return NotFound();
+                return NotFound(new {status=PreservedStringMessage.FailedStatus, status_code=404 ,message=PreservedStringMessage.DeskNotFound});
             }
 
             var options = new JsonSerializerOptions
@@ -71,7 +71,7 @@ namespace DeskReservationAPI.Controllers
             bool isadmin = await _authService.AuthenticateAdmin(HttpContext);
             if (!isadmin)
             {
-                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "Unauthorized" });
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.UserHasNoAdminRole });
             }
 
             if (!ModelState.IsValid)
@@ -107,7 +107,7 @@ namespace DeskReservationAPI.Controllers
             bool isadmin = await _authService.AuthenticateAdmin(HttpContext);
             if (!isadmin)
             {
-                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = "Unauthorized" });
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.UserHasNoAdminRole });
             }
 
             if (!ModelState.IsValid)
