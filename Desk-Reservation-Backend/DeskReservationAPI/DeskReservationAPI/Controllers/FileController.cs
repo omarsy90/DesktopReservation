@@ -5,7 +5,7 @@ namespace DeskReservationAPI.Controllers
 
 
     [Route("[controller]")]
-    public class HomeController : Controller
+    public class FileController : Controller
     {
 
 
