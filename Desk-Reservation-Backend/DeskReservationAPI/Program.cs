@@ -72,7 +72,7 @@ namespace DeskReservationAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "JWTToken_Auth_API",
+                    Title = "Desk ReservationAPI",
                     Version = "v1"
                 });
 

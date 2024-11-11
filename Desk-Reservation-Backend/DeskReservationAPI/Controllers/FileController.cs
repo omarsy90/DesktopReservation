@@ -4,7 +4,7 @@ namespace DeskReservationAPI.Controllers
 {
 
 
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FileController : Controller
     {
 

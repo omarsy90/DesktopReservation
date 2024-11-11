@@ -18,7 +18,7 @@ namespace DeskReservationAPI.Controllers
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private IAuthenticationService _authService;

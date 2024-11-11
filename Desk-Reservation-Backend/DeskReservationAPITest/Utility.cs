@@ -15,7 +15,7 @@ namespace DeskReservationAPITest
 
 
         private static int port = 7070;
-         public static string BasicUrl =  $"https://localhost:{port}";
+         public static string BasicUrl =  $"https://localhost:{port}/api";
 
         private HttpClient _client ;
         public Utility(HttpClient httpClient)

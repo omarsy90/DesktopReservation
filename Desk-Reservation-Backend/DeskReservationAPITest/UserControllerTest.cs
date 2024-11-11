@@ -21,7 +21,7 @@ namespace DeskReservationAPITest
         public UserControllerTest(TestingWebAppFactory<Program> factory)
         {
             _client = factory.CreateClient();
-            endpoint = $"https://localhost:{port}/User";
+        
         }
 
 
