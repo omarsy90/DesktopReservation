@@ -30,10 +30,10 @@ namespace DeskReservationAPITest
            var logResponse= await _utility.Login(new DeskReservationAPI.Model.LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
 
-            string token = await _utility.ExtractToken( logResponse );
+            string token = await _utility.GetToken( logResponse );
             //Action
             var resposne = await   GetComments( token );
 
@@ -53,10 +53,10 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new DeskReservationAPI.Model.LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
 
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
             //Action
             var resposne = await GetComment(token,1);
 
@@ -79,9 +79,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new DeskReservationAPI.Model.LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             CommentModel model = new CommentModel { CommentTxt = "test", DeskID = 5 };
             //Action
@@ -120,9 +120,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new DeskReservationAPI.Model.LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             CommentModel model = new CommentModel { CommentTxt = "" , DeskID=1 };
             //Action
@@ -141,9 +141,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new DeskReservationAPI.Model.LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             CommentModel model = new CommentModel { CommentTxt = "test", DeskID = int.MaxValue }; // it is supposed that no desk whose id equals int.MaxValue
             //Action

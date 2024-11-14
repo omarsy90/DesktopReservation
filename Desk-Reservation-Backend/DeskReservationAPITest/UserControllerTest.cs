@@ -1,6 +1,9 @@
 using DeskReservationAPI;
 using DeskReservationAPI.Model;
 using DeskReservationAPI.Utility;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -17,10 +20,12 @@ namespace DeskReservationAPITest
         int port = 7070;
 
         string endpoint = Utility.BasicUrl+"/User";
+        private Utility _utility;
 
         public UserControllerTest(TestingWebAppFactory<Program> factory)
         {
             _client = factory.CreateClient();
+            _utility = new Utility(_client);
         
         }
 
@@ -185,6 +190,166 @@ namespace DeskReservationAPITest
 
 
 
+      
+
+        [Fact]
+
+        public async Task UpdateUser_validPayload_ReturnUserWithNewInfo()
+        {
+            //Arrange
+           var logResponse = await SendLoginRequest(new LoginModel
+            {
+                Email = SeededData.User3.Email,
+                Password = SeededData.User3PassBeforeEncoding,
+            });
+            var token = await _utility.GetToken(logResponse);
+
+            var userModel = GetFakeUserModel();
+            //Action     
+            var response  = await UpdateUser(token, userModel);
+            //Assert
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.OK);
+            string responseContent = await _utility.GetContentFromResponse(response);
+           PasswordEncoder encoder = new PasswordEncoder();
+            var user = _utility.Deserialize<User>(responseContent);
+            Assert.NotNull(user);
+            Assert.True(user.Email == userModel.Email);
+            Assert.True(user.Password == encoder.Encode(userModel.Password));
+            Assert.True(user.Department == userModel.Department);
+            Assert.True(user.FirstName == userModel.FirstName);
+            Assert.True(user.LastName == userModel.LastName);
+
+        }
+
+
+        [Fact]
+        public async Task UpdateUser_TokenNotValid_ReturnUnAuthorized()
+        {
+            //Arrange
+            var userModel = GetFakeUserModel();
+            string token = "unvalid";
+
+            //Action
+            var response = await UpdateUser(token, userModel);
+
+            //Assert
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+
+        }
+
+
+        [Fact]
+        public async Task UpdateUser_UserModelNotValid_ReturnBadRequest()
+        {
+            //Arrange
+            var logResponse = await SendLoginRequest(new LoginModel
+            {
+                Email = SeededData.User3.Email,
+                Password = SeededData.User3PassBeforeEncoding,
+            });
+            var token =   await _utility.GetToken(logResponse);
+
+            var userModel = GetFakeUserModel();
+            userModel.Email = string.Empty;
+            //Action
+            var response = await UpdateUser(token, userModel);
+            //Assert
+            string str =  await _utility.GetContentFromResponse(response);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
+
+        }
+
+        [Fact]
+        public async Task GetUser_ValidUserID_ReturnUser()
+        {
+            // Arrange
+            var logResponse = await SendLoginRequest(new LoginModel
+            {
+                Email = SeededData.User1.Email,
+                Password = SeededData.User1PassBeforEncoding,
+            });
+            var token = await _utility.GetToken(logResponse);
+
+            //Action
+            var response = await GetUser(token, SeededData.User1.UserID);
+
+            //Assert
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.OK);
+            string resContent = await _utility.GetContentFromResponse(response);
+            var user = JsonSerializer.Deserialize<User>(resContent);
+            Assert.True(user.UserID == SeededData.User1.UserID);
+            Assert.True(isPasswordHidden(user.Password,'*'));
+
+        }
+
+
+
+        [Fact]
+        public async Task GetUser_UnvalidUserID_ReturnNotFound()
+        {
+            // Arrange
+            var logResponse = await SendLoginRequest(new LoginModel
+            {
+                Email = SeededData.User1.Email,
+                Password = SeededData.User1PassBeforEncoding,
+            });
+            var token = await _utility.GetToken(logResponse);
+
+            //Action
+            var response = await GetUser(token, "No Found User ID");
+
+            //Assert
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.NotFound);
+
+        }
+
+
+
+        private UserModel GetFakeUserModel()
+        {
+            UserModel userModel = new UserModel
+            {
+                Email = "newEmail@gmail.com",
+                Password = "new Password",
+                Department = "new Department",
+                FirstName = "new firstName",
+                LastName = " new lastName",
+            };
+
+            return userModel;
+        }
+
+
+        private bool isPasswordHidden(string password , char hidingChar)
+        {
+            foreach (char ch in password)
+            {
+                if(ch != hidingChar)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private async Task<HttpResponseMessage> GetUser(string token , string userID)
+        {
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            var response = await _client.GetAsync($"{endpoint}/{userID}");
+            return response;
+
+        }
+
+        public async Task<HttpResponseMessage> UpdateUser(string token , UserModel model)
+        {
+
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            string jsonStr = JsonSerializer.Serialize(model);
+            StringContent content = new StringContent(jsonStr,Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync($"{endpoint}", content);
+            return response;
+        }
         public async Task<HttpResponseMessage> SendLoginRequest(LoginModel model)
         {
             string jsonStr = JsonSerializer.Serialize(model);

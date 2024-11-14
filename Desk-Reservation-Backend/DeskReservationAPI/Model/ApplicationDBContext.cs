@@ -41,6 +41,7 @@ namespace DeskReservationAPI.Model
             modelBuilder.Entity<User>().HasData(
                SeededData.User1,
                SeededData.User2,
+               SeededData.User3,
                SeededData.AdminUser
                 );
 

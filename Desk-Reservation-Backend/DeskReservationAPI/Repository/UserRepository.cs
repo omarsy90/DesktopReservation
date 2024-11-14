@@ -1,4 +1,5 @@
 ﻿using DeskReservationAPI.Model;
+using DeskReservationAPI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace DeskReservationAPI.Repository
         Task<User> GetUser(string email, string password);
         Task<int> GetRoleID(string RoleName);
         Task<User> GetUserByID(string UserID);
+        Task<User> UpdateUser(User newUser);
     }
 
     public class UserRepository : IUserRepository
@@ -68,6 +70,18 @@ namespace DeskReservationAPI.Repository
            
             return  await  _dbContext.Users.Include(us=>us.Role).FirstOrDefaultAsync(us=>us.UserID == userID);
         }
-      
+
+        public async Task<User> UpdateUser(User newUser)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(us => us.UserID == newUser.UserID);
+            if (user == null) throw new ArgumentNullException(PreservedStringMessage.UserNotFound);
+            user.Email = newUser.Email;
+            user.Password =newUser.Password;
+            user.FirstName = newUser.FirstName;
+            user.LastName = newUser.LastName;
+            user.Department = newUser.Department;
+            await _dbContext.SaveChangesAsync();
+            return user;
+        }
     }
 }

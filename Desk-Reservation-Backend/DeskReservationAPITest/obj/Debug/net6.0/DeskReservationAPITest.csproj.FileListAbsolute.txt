@@ -1348,17 +1348,17 @@ C:\Users\brigi\OneDrive\Desktop\desktopReservation\DesktopReservation\Desk-Reser
 C:\Users\brigi\OneDrive\Desktop\desktopReservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\DeskReservationAPITest\obj\Debug\net6.0\DeskReservationAPITest.genruntimeconfig.cache
 C:\Users\brigi\OneDrive\Desktop\desktopReservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\DeskReservationAPITest\obj\Debug\net6.0\ref\DeskReservationAPITest.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\CoverletSourceRootsMapping
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\testhost.dll
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.deps.json
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.runtimeconfig.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\appsettings.json
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.exe
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\testhost.exe
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\testhost.dll
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\MvcTestingAppManifest.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\xunit.runner.reporters.netcoreapp10.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\xunit.runner.utility.netcoreapp10.dll
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.deps.json
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.runtimeconfig.json
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.exe
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\MvcTestingAppManifest.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPITest.deps.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPITest.runtimeconfig.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPITest.dll
@@ -1784,6 +1784,7 @@ C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Bac
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.pdb
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.xml
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\obj\Debug\net6.0\DeskReservationAPITest.csproj.AssemblyReference.cache
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\obj\Debug\net6.0\MvcTestingAppManifest.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\obj\Debug\net6.0\DeskReservationAPITest.GeneratedMSBuildEditorConfig.editorconfig
@@ -1797,4 +1798,3 @@ C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Bac
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\obj\Debug\net6.0\DeskReservationAPITest.pdb
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\obj\Debug\net6.0\DeskReservationAPITest.genruntimeconfig.cache
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\obj\Debug\net6.0\ref\DeskReservationAPITest.dll
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPITest\bin\Debug\net6.0\DeskReservationAPI.xml

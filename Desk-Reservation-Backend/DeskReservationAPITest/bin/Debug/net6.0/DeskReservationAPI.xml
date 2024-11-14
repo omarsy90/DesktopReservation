@@ -139,6 +139,13 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:DeskReservationAPI.Controllers.UserController.GetUser(System.String)">
+            <summary>
+            returns user by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:DeskReservationAPI.Migrations.FixRelationMigration">
             <inheritdoc />
         </member>
@@ -161,6 +168,30 @@
             <inheritdoc />
         </member>
         <member name="M:DeskReservationAPI.Migrations.SeedCommentsMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.AddUser3Migration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddUser3Migration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddUser3Migration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddUser3Migration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.AddIdForUser3Migration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddIdForUser3Migration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddIdForUser3Migration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddIdForUser3Migration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

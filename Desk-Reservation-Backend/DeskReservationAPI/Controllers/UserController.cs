@@ -24,7 +24,7 @@ namespace DeskReservationAPI.Controllers
         private IAuthenticationService _authService;
         private PasswordEncoder _passwordEncoder;
         private EmailTextChecker _emailTextChecker;
-        public UserController( IAuthenticationService authService)
+        public UserController(IAuthenticationService authService)
         {
             _passwordEncoder = new PasswordEncoder();
             _emailTextChecker = new EmailTextChecker();
@@ -45,9 +45,9 @@ namespace DeskReservationAPI.Controllers
             }
 
             string encodedPass = _passwordEncoder.Encode(model.Password);
-         
 
-            if (!await _authService.IsUserRegistered(model.Email,encodedPass )) 
+
+            if (!await _authService.IsUserRegistered(model.Email, encodedPass))
             {
                 return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, message = PreservedStringMessage.EmailOrPasswordIncorrectMsg });
             }
@@ -68,26 +68,26 @@ namespace DeskReservationAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if(!_emailTextChecker.CheckEmail(model.Email))
+            if (!_emailTextChecker.CheckEmail(model.Email))
             {
                 return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.EmailTypingInCorrect });
             }
 
             if (await _authService.IsEmailRegistered(model.Email))
             {
-                return BadRequest(new {status= PreservedStringMessage.FailedStatus, status_code =400, message= PreservedStringMessage.EmailExist });
+                return BadRequest(new { status = PreservedStringMessage.FailedStatus, status_code = 400, message = PreservedStringMessage.EmailExist });
             }
 
             var user = new User()
             {
                 Email = model.Email,
-                Password = _passwordEncoder.Encode( model.Password),
+                Password = _passwordEncoder.Encode(model.Password),
                 Department = model.Department,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -101,12 +101,7 @@ namespace DeskReservationAPI.Controllers
             {
                 return Problem(PreservedStringMessage.SeverErrorWhileCreatingUser);
             }
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles,
-
-                WriteIndented = false
-            };
+        
             var jsonUser = new
             {
                 id = user.UserID,
@@ -121,6 +116,51 @@ namespace DeskReservationAPI.Controllers
             return Ok(new { status = PreservedStringMessage.SuccessStatus, status_code = 201, User = jsonUser });
 
         }
+
+
+        /// <summary>
+        /// returns user by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser(string id)
+        {
+            var user = await _authService.GetUserByID(id);
+            if (user == null)
+            {
+                return NotFound(new { status = PreservedStringMessage.FailedStatus, status_code = 404, message = PreservedStringMessage.UserNotFound });
+            }
+            user.Password = "********";
+            string str = Helper.SerializeObject(user);
+            return Ok(str);
+
+        }
+
+
+        [HttpPost("")]
+        public async Task<IActionResult> UpdateUser([FromBody] UserModel model)
+        {
+            var user = await _authService.GetUser(this.HttpContext);
+            if (user == null)
+            {
+                return Unauthorized(new { status = PreservedStringMessage.FailedStatus, status_code = 401, PreservedStringMessage.UserNotValid });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(model);
+            }
+
+            var updatedUser = await _authService.UpdateUser(user.UserID, model); 
+
+            string str = Helper.SerializeObject(updatedUser);
+            return Ok(str);
+
+        }
+
+
+
     }
 
 }

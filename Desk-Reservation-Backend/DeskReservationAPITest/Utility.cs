@@ -33,7 +33,7 @@ namespace DeskReservationAPITest
 
 
 
-        public async Task<string> ExtractToken(HttpResponseMessage response)
+        public async Task<string> GetToken(HttpResponseMessage response)
         {
             
             string strResponse = await GetContentFromResponse(response);

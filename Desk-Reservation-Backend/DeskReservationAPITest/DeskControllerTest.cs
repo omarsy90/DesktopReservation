@@ -41,7 +41,7 @@ namespace DeskReservationAPITest
         {
             //Arrange
             var loginResponse = await _utility.Login(new LoginModel { Email = "user@gmail.com", Password = "user" });
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
             //Action
             var response = await GetAllDesk(token);
             //Assert
@@ -75,7 +75,7 @@ namespace DeskReservationAPITest
 
             //Arrange
            var loginResponse = await _utility.Login(new LoginModel { Email="user@gmail.com",Password= "user" });
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
             int deskID = 1; // supposed this ID  seeded in database
 
             //Action
@@ -93,7 +93,7 @@ namespace DeskReservationAPITest
 
             //Arrange
             var loginResponse = await _utility.Login(new LoginModel { Email = "user@gmail.com", Password = "user" });
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
             int deskID = -1; // supposed this ID  seeded in database
 
             //Action

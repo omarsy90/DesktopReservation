@@ -5,6 +5,7 @@ C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Bac
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\DeskReservationAPI.runtimeconfig.json
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\DeskReservationAPI.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\DeskReservationAPI.pdb
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\DeskReservationAPI.xml
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\Azure.Identity.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\Humanizer.dll
@@ -84,8 +85,7 @@ C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Bac
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.csproj.CopyComplete
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.dll
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\refint\DeskReservationAPI.dll
+C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.xml
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.pdb
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.genruntimeconfig.cache
 C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\ref\DeskReservationAPI.dll
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\bin\Debug\net6.0\DeskReservationAPI.xml
-C:\Users\AlkanjO\Desktop\deskreservation\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.xml

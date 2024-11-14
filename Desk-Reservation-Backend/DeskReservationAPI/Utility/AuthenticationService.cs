@@ -1,5 +1,6 @@
 ﻿using DeskReservationAPI.Model;
 using DeskReservationAPI.Repository;
+using System.Text;
 
 namespace DeskReservationAPI.Utility
 {
@@ -7,6 +8,8 @@ namespace DeskReservationAPI.Utility
     {
         Task<bool> AuthenticateAdmin(HttpContext httpContext);
         Task<User> GetUser(HttpContext httpContext);
+        Task<User> GetUserByID(string userID);
+        Task<User> UpdateUser(string userID, UserModel model);
         Task<bool> IsUserRegistered(string email, string pass);
         Task<User> GetUser(string email, string pass);
         Task<bool> IsEmailRegistered(string email);
@@ -85,7 +88,7 @@ namespace DeskReservationAPI.Utility
             string token = httpContext.Request.Headers["Authorization"].ToString();
             string jwtString = token.Substring("Bearer ".Length).Trim();
             string userID = _tokenManager.GetClaimByKey(jwtString, "id");
-            if (userID == null)
+            if (string.IsNullOrEmpty(userID))
             {
                 return false;
             }
@@ -104,6 +107,30 @@ namespace DeskReservationAPI.Utility
             string jwtString = token.Substring("Bearer ".Length).Trim();
             string userID = _tokenManager.GetClaimByKey(jwtString, "id");
             var user = await _userRepository.GetUserByID(userID);
+            return user;
+        }
+
+        public async Task<User> GetUserByID(string userID)
+        {
+            var user = await _userRepository.GetUserByID(userID);
+            return user;
+        }
+
+        public async Task<User> UpdateUser( string userID ,UserModel model )
+        {
+          PasswordEncoder encoder = new PasswordEncoder();
+            var newUser = new User
+            {
+                UserID = userID,
+                Email = model.Email,
+                Password =  encoder.Encode( model.Password),
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Department = model.Department,
+
+            };
+
+           var user = await _userRepository.UpdateUser(newUser);
             return user;
         }
     }

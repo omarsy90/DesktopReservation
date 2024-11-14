@@ -35,10 +35,10 @@ namespace DeskReservationAPITest
 
             //Arrange
             var res = await _utility.Login(new LoginModel
-            { Email = SeededData.User1.Email, Password = SeededData.User1Pass }
+            { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding }
             );
 
-            string token = await _utility.ExtractToken(res);
+            string token = await _utility.GetToken(res);
 
 
             ReservationModel model = new ReservationModel()
@@ -66,10 +66,10 @@ namespace DeskReservationAPITest
         {
             //Arrange
             var res = await _utility.Login(new LoginModel
-            { Email = SeededData.User2.Email, Password = SeededData.User2Pass }
+            { Email = SeededData.User2.Email, Password = SeededData.User2PassBeforeEncoding }
             );
 
-            string token = await _utility.ExtractToken(res);
+            string token = await _utility.GetToken(res);
 
 
             ReservationModel model = new ReservationModel()
@@ -97,9 +97,9 @@ namespace DeskReservationAPITest
             var loginReseponse = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(loginReseponse);
+            string token = await _utility.GetToken(loginReseponse);
             ReservationModel model = new ReservationModel()
             {
                 DeskID = 5,
@@ -123,10 +123,10 @@ namespace DeskReservationAPITest
 
             //Arrange
             var res = await _utility.Login(new LoginModel
-            { Email = SeededData.AdminUser.Email, Password = SeededData.AdminUserPass }
+            { Email = SeededData.AdminUser.Email, Password = SeededData.AdminUserPassBeforeEncoding }
             );
 
-            string token = await _utility.ExtractToken(res);
+            string token = await _utility.GetToken(res);
 
 
             //Action
@@ -150,10 +150,10 @@ namespace DeskReservationAPITest
 
             //Arrange
             var res = await _utility.Login(new LoginModel
-            { Email = SeededData.AdminUser.Email, Password = SeededData.AdminUserPass }
+            { Email = SeededData.AdminUser.Email, Password = SeededData.AdminUserPassBeforeEncoding }
             );
 
-            string token = await _utility.ExtractToken(res);
+            string token = await _utility.GetToken(res);
 
 
             //Action
@@ -175,9 +175,9 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
 
             //Action
             var response = await ConfirmFixReservation(3, false, token);
@@ -195,9 +195,9 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.AdminUser.Email,
-                Password = SeededData.AdminUserPass
+                Password = SeededData.AdminUserPassBeforeEncoding
             });
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
 
             //Action
             var response = await ConfirmFixReservation(-1, false, token);
@@ -217,7 +217,7 @@ namespace DeskReservationAPITest
                 Password = "unvalidPass"
             });
 
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
 
             //Action
             var response = await GetFixReservationRequestsForUser(token);
@@ -235,10 +235,10 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
 
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
             //Action
             var response = await GetFixReservationRequestsForUser(token);
 
@@ -263,7 +263,7 @@ namespace DeskReservationAPITest
                 Password = "unvalidpass"
             });
 
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
             //Action
             var response = await GetFixReservationConfirmedForUser(token);
             //Assert
@@ -278,10 +278,10 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
 
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
             //Action
             var response = await GetFixReservationConfirmedForUser(token);
 
@@ -304,9 +304,9 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
             //Action
             var response = await GetReservationByID(token, -1);
 
@@ -323,9 +323,9 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
             //Action
             var response = await GetReservationByID(token, 1);
 
@@ -346,9 +346,9 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass
+                Password = SeededData.User1PassBeforEncoding
             });
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
 
             //Action
                var response = await   GetAllFixReservationRequests(token);
@@ -366,9 +366,9 @@ namespace DeskReservationAPITest
             var loginRes = await _utility.Login(new LoginModel
             {
                 Email = SeededData.AdminUser.Email,
-                Password = SeededData.AdminUserPass
+                Password = SeededData.AdminUserPassBeforeEncoding
             });
-            string token = await _utility.ExtractToken(loginRes);
+            string token = await _utility.GetToken(loginRes);
 
             //Action
             var response = await GetAllFixReservationRequests(token);

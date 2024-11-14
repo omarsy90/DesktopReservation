@@ -18,6 +18,7 @@ namespace DeskReservationAPI.Utility
         private TokenValidationParameters _tokenValidationParameters;
         public readonly SymmetricSecurityKey _symmetricSecurityKey;
         private SigningCredentials _signingCredentials;
+        private JwtSecurityTokenHandler _tokenHandler;
         public TokenManager(JWTSetting jwtSetting)
         {
 
@@ -37,6 +38,7 @@ namespace DeskReservationAPI.Utility
 
             };
 
+            _tokenHandler = new JwtSecurityTokenHandler();
 
         }
 
@@ -44,7 +46,7 @@ namespace DeskReservationAPI.Utility
       
         public string GetToken(Dictionary<string, string> keyValuePairs)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
+            
             var key = Encoding.ASCII.GetBytes(_jwtSetting.Key);
             List<Claim> claims = new List<Claim>();
             foreach (var keyValue in keyValuePairs)
@@ -62,23 +64,32 @@ namespace DeskReservationAPI.Utility
                 Expires = DateTime.UtcNow.AddDays(_jwtSetting.DurationOnDays),
                 SigningCredentials = _signingCredentials
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var token = _tokenHandler.CreateToken(tokenDescriptor);
+            return _tokenHandler.WriteToken(token);
         }
 
 
         public string GetClaimByKey(string token , string key)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtToken = tokenHandler.ReadJwtToken(token);
-            Dictionary<string, string> claimDic = new Dictionary<string, string>();
-            foreach (var item in jwtToken.Claims)
+                   
+            try
             {
-                claimDic.Add(item.Type, item.Value);
-            }
+                var jwtToken = _tokenHandler.ReadJwtToken(token);
+                Dictionary<string, string> claimDic = new Dictionary<string, string>();
+                foreach (var item in jwtToken.Claims)
+                {
+                    claimDic.Add(item.Type, item.Value);
+                }
 
-            claimDic.TryGetValue(key, out string value);
-            return value;
+                claimDic.TryGetValue(key, out string value);
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+           
+         
         }
       
     }

@@ -20,7 +20,7 @@ namespace DeskReservationAPI
         public static void Main(string[] args)
         {
 
-          
+
 
             var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +63,7 @@ namespace DeskReservationAPI
             };
 
             TokenManager tokenManager = new TokenManager(jWTSetting);
-            builder.Services.AddSingleton < TokenManager>(tokenManager);
+            builder.Services.AddSingleton< TokenManager>(tokenManager);
 
 
 

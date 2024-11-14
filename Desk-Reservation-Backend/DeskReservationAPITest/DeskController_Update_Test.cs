@@ -164,7 +164,7 @@ namespace DeskReservationAPITest
                 responseFromLogin = await _utility.Login(new LoginModel { Email = "user@gmail.com", Password = "user" });
             }
 
-            string token = await _utility.ExtractToken(responseFromLogin);
+            string token = await _utility.GetToken(responseFromLogin);
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             string payload = JsonSerializer.Serialize(newModel);
             StringContent content = new StringContent(payload, Encoding.UTF8, "application/json");

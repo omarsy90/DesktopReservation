@@ -30,9 +30,9 @@ namespace DeskReservationAPITest
         public async Task CreateNewFlexReservation_UnvalidReservationModel_RetuenbadRequest()
         {
             //Arrange
-            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1Pass };
+            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding };
             var loginResponse = await _utility.Login(loginModel);
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
 
             FlexReservationModel reservationModel = new FlexReservationModel()
             {
@@ -55,9 +55,9 @@ namespace DeskReservationAPITest
         {
 
             //Arrange
-            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1Pass };
+            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding };
             var loginResponse = await _utility.Login(loginModel);
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
 
             FlexReservationModel reservationModel = new FlexReservationModel()
             {
@@ -82,9 +82,9 @@ namespace DeskReservationAPITest
         {
 
             //Arrange
-            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1Pass };
+            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding };
             var loginResponse = await _utility.Login(loginModel);
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
 
             FlexReservationModel reservationModel = new FlexReservationModel()
             {
@@ -109,9 +109,9 @@ namespace DeskReservationAPITest
         public async Task CreateNewFlexReservation_UserHasAlreadyReservationInDurationRequested_ReturnBadRequest()
         {
             //Arrange
-            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1Pass };
+            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding };
             var loginResponse = await _utility.Login(loginModel);
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
 
             FlexReservationModel model = new FlexReservationModel
             {
@@ -136,9 +136,9 @@ namespace DeskReservationAPITest
         {
 
             //Arrange
-            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1Pass };
+            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding };
             var loginResponse = await _utility.Login(loginModel);
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
 
             FlexReservationModel reservationModel = new FlexReservationModel()
             {
@@ -167,9 +167,9 @@ namespace DeskReservationAPITest
         public async Task CreateNewFlexReservation_ReservationTimeExccedThreeDays_ReturnBadRequest()
         {
             //Arrange
-            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1Pass };
+            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding };
             var loginResponse = await _utility.Login(loginModel);
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
 
             FlexReservationModel reservationModel = new FlexReservationModel()
             {
@@ -192,9 +192,9 @@ namespace DeskReservationAPITest
         public async Task CreateNewFlexReservation_UserHasReservationInTimeRequsted_RetunBadRequest()
         {
             //Arrange
-            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1Pass };
+            LoginModel loginModel = new LoginModel() { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding };
             var loginResponse = await _utility.Login(loginModel);
-            string token = await _utility.ExtractToken(loginResponse);
+            string token = await _utility.GetToken(loginResponse);
 
             FlexReservationModel reservationModel = new FlexReservationModel()
             {
@@ -230,9 +230,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass,
+                Password = SeededData.User1PassBeforEncoding,
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             //Action
             var res = await DeleteFlexReservation(token, -1);
@@ -250,9 +250,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass,
+                Password = SeededData.User1PassBeforEncoding,
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             //Action
             var res = await DeleteFlexReservation(token, 5);
@@ -269,9 +269,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User2.Email,
-                Password = SeededData.User2Pass,
+                Password = SeededData.User2PassBeforeEncoding,
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             FlexReservationModel model = new FlexReservationModel
             {
@@ -301,9 +301,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User1.Email,
-                Password = SeededData.User1Pass,
+                Password = SeededData.User1PassBeforEncoding,
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             //Action
             var res = await DeleteFlexReservation(token, 4);
@@ -320,9 +320,9 @@ namespace DeskReservationAPITest
             var logResponse = await _utility.Login(new LoginModel
             {
                 Email = SeededData.User2.Email,
-                Password = SeededData.User2Pass,
+                Password = SeededData.User2PassBeforeEncoding,
             });
-            string token = await _utility.ExtractToken(logResponse);
+            string token = await _utility.GetToken(logResponse);
 
             FlexReservationModel model = new FlexReservationModel
             {

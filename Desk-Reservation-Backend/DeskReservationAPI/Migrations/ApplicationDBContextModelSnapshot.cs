@@ -72,7 +72,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 1,
                             CommentTxt = "headset not available",
-                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 730, DateTimeKind.Local).AddTicks(4795),
+                            CommentedAt = new DateTime(2024, 11, 12, 16, 25, 40, 852, DateTimeKind.Local).AddTicks(8932),
                             DeskID = 1,
                             UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A"
                         },
@@ -80,7 +80,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 2,
                             CommentTxt = "screen should be bigger",
-                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 732, DateTimeKind.Local).AddTicks(6997),
+                            CommentedAt = new DateTime(2024, 11, 12, 16, 25, 40, 855, DateTimeKind.Local).AddTicks(9377),
                             DeskID = 2,
                             UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A"
                         },
@@ -88,7 +88,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 3,
                             CommentTxt = "chair should be movable",
-                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 732, DateTimeKind.Local).AddTicks(7021),
+                            CommentedAt = new DateTime(2024, 11, 12, 16, 25, 40, 855, DateTimeKind.Local).AddTicks(9404),
                             DeskID = 2,
                             UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D"
                         },
@@ -96,7 +96,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 4,
                             CommentTxt = "good infrastructured",
-                            CommentedAt = new DateTime(2024, 10, 28, 18, 47, 30, 732, DateTimeKind.Local).AddTicks(7025),
+                            CommentedAt = new DateTime(2024, 11, 12, 16, 25, 40, 855, DateTimeKind.Local).AddTicks(9408),
                             DeskID = 3,
                             UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D"
                         });
@@ -725,6 +725,16 @@ namespace DeskReservationAPI.Migrations
                             FirstName = "user2",
                             LastName = "user2",
                             Password = "MtBDli4jZtpNRe4EYPmhzZZ8IfoCBCr3idMQMd4fZFU=",
+                            RoleID = 1
+                        },
+                        new
+                        {
+                            UserID = "E0074AA3-8523-4021-9063-5C8DB4FE55C0",
+                            Department = "dep",
+                            Email = "user3@gmail.com",
+                            FirstName = "user3",
+                            LastName = "user3",
+                            Password = "oKoKqib6p6u5vbpdI2sl+AmV/3TVSbDGa5uvEyRHb/0=",
                             RoleID = 1
                         },
                         new

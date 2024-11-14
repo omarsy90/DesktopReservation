@@ -58,7 +58,7 @@ namespace DeskReservationAPITest
 
         
 
-            TokenManager tokenGenerator = new TokenManager(jWTSetting);
+            TokenManager tokenManager = new TokenManager(jWTSetting);
          
 
 
@@ -92,7 +92,7 @@ namespace DeskReservationAPITest
 
                 };
                 services.AddScoped<IUserRepository, UserRepository>();
-                services.AddSingleton<TokenManager>(tokenGenerator);
+                services.AddSingleton<TokenManager>(tokenManager);
                 services.AddScoped<IDeskRepository, DeskRepository>();
                 services.AddScoped<IOfficeRepository, OfficeRepository>();
                 services.AddScoped<IEquipmentRepository, EquipmentRepository>();

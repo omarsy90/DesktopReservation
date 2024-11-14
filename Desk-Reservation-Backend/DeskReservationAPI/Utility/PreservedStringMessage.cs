@@ -21,6 +21,7 @@
         public static readonly string CancellingTimeShouldSetBeforeFinishingReservation = "the cancelling time after  reservation has finished not allowed";
         public static readonly string CancellingTimeNotAllowedDuringOccupation = "the cancelling time during occupation the desk not allowed";
         public static readonly string ReservationSuccessfullyDeleted = "reservation  has been successfully deleted";
+        public static readonly string UserNotFound = "user not found";
     }
    
 }
