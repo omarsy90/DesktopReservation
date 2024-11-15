@@ -1,13 +1,11 @@
-import service from "../service/index.js";
+import service from "../service/strorageService.js";
 
 export async function isAuthorised(to, from, next) {
     const token = service.getDataLocalStorage('token') || service.getDataSessionStorage('token')
-    const userId = service.getDataLocalStorage('userId') || service.getDataSessionStorage('userId')
-    if (token && userId) {
-       
+    if (token) {
         next()
-
-}else{
+}
+else{
     next({name:'login'});
 }
 

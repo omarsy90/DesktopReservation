@@ -33,6 +33,8 @@ namespace DeskReservationAPI.Controllers
 
         /// <summary>
         /// login registered user.
+        /// for test purpose : (email =user@gmail.com , password=User111$ ) .
+        /// for admin  (email =admin@gmail.com , password =adminUser$  )
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

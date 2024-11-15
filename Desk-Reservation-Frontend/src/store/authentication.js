@@ -83,7 +83,7 @@ const authenticaton = {
       context.commit("isAdmin", user.isAdmin);
       context.commit("token", user.token);
     },
-    async logIn(context) {
+    async logIn(context ) {
       
       context.rootState.isloading = true;
       const auth = {
@@ -91,21 +91,18 @@ const authenticaton = {
         password: context.getters.password,
       };
       const response = await service.logIn(auth);
-
       context.rootState.isloading = false;
       if (response?.status === 200) {
         context.rootState.error = "";
         context.commit("token", response.data.token);
         console.log(context.state.token);
+        return true ;
         
       } else if( response?.status === 401) {
         context.rootState.error = "email address or password not correct";
         console.log(context.state.token);
-      }else if(response?.status ==400)
-      {
-         context.rootState.error ="email and password must be filled";
       }
-      return null;
+      return false;
     },
     async getProfile(context) {
       // payload have token and userId
@@ -160,8 +157,8 @@ const authenticaton = {
     isAdmin(state) {
       return state.isAdmin;
     },
-    userId(state) {
-      return state.userId;
+    token(state) {
+      return state.token;
     },
   },
 };
