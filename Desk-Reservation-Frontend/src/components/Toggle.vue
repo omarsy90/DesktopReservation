@@ -1,6 +1,6 @@
 <template>
   <label class="switch">
-    <input type="checkbox" @change="onChange($event)" :checked="ischecked" />
+    <input type="checkbox" v-on:change="onChange($event)" :checked="ischecked" />
     <span class="slider round"></span>
   </label>
 </template>

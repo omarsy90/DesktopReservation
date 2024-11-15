@@ -135,7 +135,24 @@ namespace DeskReservationAPI
 
             // finish
 
-            var app = builder.Build();
+
+            // allow cors policy
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigins", builder =>
+                {
+                    builder.WithOrigins("http://localhost:8080") // Replace with your frontend domain
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
+
+            
+        
+
+        // finish
+
+        var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -143,8 +160,8 @@ namespace DeskReservationAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-           
+            app.UseRouting();
+            app.UseCors("AllowSpecificOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
 

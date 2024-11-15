@@ -16,6 +16,7 @@ namespace DeskReservationAPI.Utility
         Task<User> AddUser(User user);
         Task<int> GetRoleID(string RoleName);
          string GetToken(Dictionary<string, string> dic);
+        Task<Role> GetUserRole(string email, string pass);
     }
 
     public class AuthenticationService : IAuthenticationService

@@ -4,6 +4,7 @@ using DeskReservationAPI.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeskReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241115161711_chaangeUserPassMigration")]
+    partial class chaangeUserPassMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +75,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 1,
                             CommentTxt = "headset not available",
-                            CommentedAt = new DateTime(2024, 11, 15, 18, 3, 15, 70, DateTimeKind.Local).AddTicks(6510),
+                            CommentedAt = new DateTime(2024, 11, 15, 17, 17, 10, 505, DateTimeKind.Local).AddTicks(2318),
                             DeskID = 1,
                             UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A"
                         },
@@ -80,7 +83,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 2,
                             CommentTxt = "screen should be bigger",
-                            CommentedAt = new DateTime(2024, 11, 15, 18, 3, 15, 72, DateTimeKind.Local).AddTicks(5152),
+                            CommentedAt = new DateTime(2024, 11, 15, 17, 17, 10, 507, DateTimeKind.Local).AddTicks(1040),
                             DeskID = 2,
                             UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A"
                         },
@@ -88,7 +91,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 3,
                             CommentTxt = "chair should be movable",
-                            CommentedAt = new DateTime(2024, 11, 15, 18, 3, 15, 72, DateTimeKind.Local).AddTicks(5175),
+                            CommentedAt = new DateTime(2024, 11, 15, 17, 17, 10, 507, DateTimeKind.Local).AddTicks(1062),
                             DeskID = 2,
                             UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D"
                         },
@@ -96,7 +99,7 @@ namespace DeskReservationAPI.Migrations
                         {
                             CommentID = 4,
                             CommentTxt = "good infrastructured",
-                            CommentedAt = new DateTime(2024, 11, 15, 18, 3, 15, 72, DateTimeKind.Local).AddTicks(5180),
+                            CommentedAt = new DateTime(2024, 11, 15, 17, 17, 10, 507, DateTimeKind.Local).AddTicks(1066),
                             DeskID = 3,
                             UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D"
                         });
@@ -744,7 +747,7 @@ namespace DeskReservationAPI.Migrations
                             Email = "admin@gmail.com",
                             FirstName = "admin",
                             LastName = "admin",
-                            Password = "y6Np0j9AGBxgWtXjG1yzbjWVyn5IAiL4Qp49ffABflw=",
+                            Password = "ImurlGyyIPEa3+UpWmpkx3cHpNkG2U4JgJ6x6QtQjDA=",
                             RoleID = 2
                         });
                 });

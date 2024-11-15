@@ -9,10 +9,10 @@ namespace DeskReservationAPI
         private static PasswordEncoder pswEncoder = new PasswordEncoder();
 
         //Users
-        public readonly static string User1PassBeforEncoding = "user";
-        public readonly static string User2PassBeforeEncoding = "user2";
-        public readonly static string User3PassBeforeEncoding = "user3";
-        public  readonly static string AdminUserPassBeforeEncoding = "admin";
+        public readonly static string User1PassBeforEncoding = "User111$";
+        public readonly static string User2PassBeforeEncoding = "User222$";
+        public readonly static string User3PassBeforeEncoding = "User333$";
+        public  readonly static string AdminUserPassBeforeEncoding = "adminUser$";
         public readonly static User User1 =  new User() { UserID = "B490AD07-7670-4B7B-8B78-E0176FA9EC4A", FirstName = "user", LastName = "user", Email = "user@gmail.com", Department = "dep", Password = pswEncoder.Encode(User1PassBeforEncoding), RoleID = 1 } ;
         public readonly static User User2 = new User { UserID = "86C4C6C0-A30F-4595-968D-3EF3E09E9F6D", FirstName = "user2", LastName = "user2", Email = "user2@gmail.com", Department = "dep", Password = pswEncoder.Encode(User2PassBeforeEncoding), RoleID = 1 };
         public readonly static User AdminUser = new User { UserID = "66AFEF1E-0253-45F4-9968-6072073AD6C6", FirstName = "admin", LastName = "admin", Email = "admin@gmail.com", Department = "dep", Password = pswEncoder.Encode(AdminUserPassBeforeEncoding), RoleID = 2 };

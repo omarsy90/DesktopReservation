@@ -1,11 +1,8 @@
 <template>
   <form @submit.prevent="logIn()">
-    <success-item
-      v-if="$store.state.successMessage"
-      :msg="$store.state.successMessage"
-    >
-    </success-item>
-    <error-item v-else-if="$store.state.error" :msg="$store.state.error">
+    
+   
+    <error-item v-if="$store.state.error" :msg="$store.state.error">
     </error-item>
 
     <div class="input-container">
@@ -15,8 +12,8 @@
         v-model="$store.state.authentication.email"
         required
       />
-      <span v-if="checkEmail">Tragen Sie Bitte Ihre Email ein</span>
-      <span v-else-if="checkTypeEmail">Ungültige Email-Addresse</span>
+     <span v-if="emailError">email is not correct</span>
+      
 
       <label>Passwort:</label>
       <input
@@ -24,17 +21,15 @@
         v-model="$store.state.authentication.password"
         required
       />
-      <span v-if="checkpassword">Tragen Sie Bitte Ihr Passwort ein</span>
-      <span v-else-if="checkTypePassword"
-        >Passwort muss mindestens 8 Charachter,ein groß Buchstabe und eine Zahl
-        haben</span
-      >
+      <span v-if="passwordError">password must have at least 8 letters ,One sign and one capital letter </span>
+      
+      
     </div>
 
     <div class="checkbox-container">
       <p>Eingeloggt bleiben</p>
       <toggle
-        @toggle="changeRemeber()"
+       
         :ischecked="remember"
         v-on:toggle="changeRemeber($event)"
       >
@@ -54,14 +49,13 @@
 </template>
 
 <script>
-import SuccessItem from "./SuccessItem.vue";
+
 import ErrorItem from "./ErrorItem.vue";
 import Spinner from "./Spinner.vue";
 import Toggle from "./Toggle.vue";
-import service from "../service/index.js";
+import service from "../service/strorageService.js";
 export default {
   components: {
-    SuccessItem,
     ErrorItem,
     Spinner,
     Toggle,
@@ -69,100 +63,58 @@ export default {
   data() {
     return {
       remember: false,
+      
     };
   },
   methods: {
     logIn() {
-      if (
-        this.$store.state.isloading === false &&
-        !this.checkEmail &&
-        !this.checkTypeEmail &&
-        !this.checkpassword &&
-        !this.checkTypePassword
-      ) {
+       {
         // there is no request running and email and password right wroten
-
-        this.$store.dispatch("authentication/logIn").then((res) => {
-          if (res) {
-            //res hold token and userId
+      console.log("user try login ")
+        this.$store.dispatch("authentication/logIn").then((isLogged) => {
+          if (isLogged) {
+           let token = this.$store.getters["authentication/token"];
 
             if (this.remember) {
               service.saveDataLocalStorage({
                 key: "token",
-                value: res.token,
-              });
-
-              service.saveDataLocalStorage({
-                key: "userId",
-                value: res.userId,
+                value: token
               });
             } else {
               service.saveDataSessionStorage({
                 key: "token",
-                value: res.token,
+                value: token,
               });
 
-              service.saveDataSessionStorage({
-                key: "userId",
-                value: res.userId,
-              });
             }
-
-            // this.$router.push({
-            //   path: `/homepage`
-            // }).catch(()=>{   });
-
-            window.location.href = "/homepage";
-          } else {
-            // there is error in login
+            window.location.href = "/";
           }
         });
       }
     },
 
-    changeRemeber(result) {
-      this.remember = result;
+    changeRemeber(isCheecked) {
+      this.remember = isCheecked;
     },
   },
 
   computed: {
-    checkEmail: function () {
-      if (!this.$store.getters["authentication/email"] == "") {
-        return false;
-      }
-      return true;
-    },
+    emailError()
+    {
+      let email = this.$store.getters["authentication/email"];
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      let isValid = emailRegex.test(email);
+      return !isValid
+    } ,
+    passwordError()
+    {
+      let pass = this.$store.getters["authentication/password"]
+      const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+      let isvalid = passwordRegex.test(pass);
+      return !isvalid
+    }
 
-    checkTypeEmail: function () {
-      const regex = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
-
-      const result = String(this.$store.getters["authentication/email"]).match(
-        regex
-      );
-
-      if (result) {
-        return false;
-      }
-      return true;
-    },
-
-    checkpassword: function () {
-      if (!this.$store.getters["authentication/password"] == "") {
-        return false;
-      }
-      return true;
-    },
-
-    checkTypePassword: function () {
-      const password = this.$store.getters["authentication/password"];
-      var mediumRegex = new RegExp("^(?=.*[a-z])(?=.*[0-9])(?=.{8,})");
-      const result = password.match(mediumRegex);
-
-      if (result) {
-        return false;
-      }
-      return true;
-    },
+     
   },
 };
 </script>

@@ -36,7 +36,7 @@ const routes = [
     component: Register,
   },
   {
-    path: "/homepage",
+    path: "/",
     name: "deskbookinglayout",
     beforeEnter: isAuthorised ,
     component: DeskBookingLayout ,

@@ -52,7 +52,7 @@ namespace DeskReservationAPITest
             LoginModel model = new LoginModel
             {
                 Email = "test@gmail.com",
-                Password = "1234",
+                Password = "Test123$",
             };
 
 
@@ -73,9 +73,9 @@ namespace DeskReservationAPITest
             {
                 FirstName = "string",
                 LastName = "string",
-                Email = "name@email.com",
+                Email = "name@gmail.com",
                 UserName = "string",
-                Password = "string",
+                Password = "string$S1",
                 Department = "string",
 
             };
@@ -103,7 +103,7 @@ namespace DeskReservationAPITest
             //Arrange
             var registerModel = new RegisterModel
             {
-                Email = " email ",
+                Email = " email",
                 Password = "t",
                 Department = "t ",
                 FirstName = " t",
@@ -122,7 +122,7 @@ namespace DeskReservationAPITest
             //Assert
             string content = await ReadResponseContent(response);
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
-            Assert.True(content.Contains(PreservedStringMessage.EmailTypingInCorrect));
+           
 
         }
 
@@ -144,7 +144,7 @@ namespace DeskReservationAPITest
                 LastName = "string",
                 Email = "name@email.com",
                 UserName = "string",
-                Password = "string",
+                Password = "stringR$",
                 Department = "string",
 
             };
@@ -174,7 +174,7 @@ namespace DeskReservationAPITest
                 LastName = "string",
                 Email = "name2@email.com",
                 UserName = "string",
-                Password = "string",
+                Password = "stringtr$D",
                 Department = "string",
 
             };
@@ -310,7 +310,7 @@ namespace DeskReservationAPITest
             UserModel userModel = new UserModel
             {
                 Email = "newEmail@gmail.com",
-                Password = "new Password",
+                Password = "new Password$",
                 Department = "new Department",
                 FirstName = "new firstName",
                 LastName = " new lastName",

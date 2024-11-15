@@ -166,11 +166,11 @@ namespace DeskReservationAPITest
             HttpResponseMessage responseFromLogin;
             if (userType == UserType.AdminUser)
             {
-                 responseFromLogin = await _utility.Login( new LoginModel { Email= "admin@gmail.com" , Password="admin"} );
+                 responseFromLogin = await _utility.Login( new LoginModel { Email= SeededData.AdminUser.Email , Password= SeededData.AdminUserPassBeforeEncoding} );
             }
             else
             {
-                 responseFromLogin = await _utility.Login(new LoginModel { Email = "user@gmail.com", Password = "user" });
+                 responseFromLogin = await _utility.Login(new LoginModel { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding });
             }
             
             string token = await _utility.GetToken(responseFromLogin);

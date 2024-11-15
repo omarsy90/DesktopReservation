@@ -194,5 +194,29 @@
         <member name="M:DeskReservationAPI.Migrations.AddIdForUser3Migration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:DeskReservationAPI.Migrations.chaangeUserPassMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.chaangeUserPassMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.chaangeUserPassMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.chaangeUserPassMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.changeUserPasswordsMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.changeUserPasswordsMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.changeUserPasswordsMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.changeUserPasswordsMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

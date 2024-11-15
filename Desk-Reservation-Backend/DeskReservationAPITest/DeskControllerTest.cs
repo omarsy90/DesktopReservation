@@ -40,7 +40,7 @@ namespace DeskReservationAPITest
         public async Task Index_ValidUserToken_ReturnListOfDesk()
         {
             //Arrange
-            var loginResponse = await _utility.Login(new LoginModel { Email = "user@gmail.com", Password = "user" });
+            var loginResponse = await _utility.Login(new LoginModel {Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding });
             string token = await _utility.GetToken(loginResponse);
             //Action
             var response = await GetAllDesk(token);
@@ -74,7 +74,7 @@ namespace DeskReservationAPITest
         {
 
             //Arrange
-           var loginResponse = await _utility.Login(new LoginModel { Email="user@gmail.com",Password= "user" });
+           var loginResponse = await _utility.Login(new LoginModel { Email= SeededData.User1.Email,Password= SeededData.User1PassBeforEncoding });
             string token = await _utility.GetToken(loginResponse);
             int deskID = 1; // supposed this ID  seeded in database
 
@@ -92,7 +92,7 @@ namespace DeskReservationAPITest
         {
 
             //Arrange
-            var loginResponse = await _utility.Login(new LoginModel { Email = "user@gmail.com", Password = "user" });
+            var loginResponse = await _utility.Login(new LoginModel { Email = SeededData.User1.Email, Password = SeededData.User1PassBeforEncoding });
             string token = await _utility.GetToken(loginResponse);
             int deskID = -1; // supposed this ID  seeded in database
 

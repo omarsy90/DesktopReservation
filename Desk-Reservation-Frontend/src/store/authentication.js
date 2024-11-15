@@ -1,8 +1,8 @@
-import service from "../service/index.js";
+import service from "../service/authenticationService.js";
 const authenticaton = {
   namespaced: true,
   state: () => ({
-    userId: "",
+    token: "",
     firstname: "",
     lastname: "",
     department: "",
@@ -11,8 +11,8 @@ const authenticaton = {
     isAdmin: false,
   }),
   mutations: {
-    userId(state, userId) {
-      state.userId = userId;
+    token(state, token) {
+      state.token = token;
     },
     firstname(state, firstname) {
       state.firstname = firstname;
@@ -81,28 +81,31 @@ const authenticaton = {
       context.commit("department", user.department);
       context.commit("email", user.email);
       context.commit("isAdmin", user.isAdmin);
-      context.commit("userId", user.id);
+      context.commit("token", user.token);
     },
     async logIn(context) {
-      // this function return data-response (token and userId) if all right (user hase logged in)
-      // return false if there is an error (unautherizes or parameter missing)
+      
       context.rootState.isloading = true;
       const auth = {
         email: context.getters.email,
         password: context.getters.password,
       };
       const response = await service.logIn(auth);
+
       context.rootState.isloading = false;
-      if (response?.token) {
+      if (response?.status === 200) {
         context.rootState.error = "";
-        context.commit("userId", response.userId);
-        return response;
-      } else if (response == 400) {
-        context.rootState.error = "Eines oder mehrere Felder sind auszufüllen";
-      } else if (response == 401) {
-        context.rootState.error = "Email-Adresse oder Passwort ist ungültig !";
+        context.commit("token", response.data.token);
+        console.log(context.state.token);
+        
+      } else if( response?.status === 401) {
+        context.rootState.error = "email address or password not correct";
+        console.log(context.state.token);
+      }else if(response?.status ==400)
+      {
+         context.rootState.error ="email and password must be filled";
       }
-      return false;
+      return null;
     },
     async getProfile(context) {
       // payload have token and userId

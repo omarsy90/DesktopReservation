@@ -41,7 +41,7 @@ namespace DeskReservationAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new {stauts=PreservedStringMessage.FailedStatus, status_code=400, ModelState});
             }
 
             string encodedPass = _passwordEncoder.Encode(model.Password);
@@ -53,11 +53,12 @@ namespace DeskReservationAPI.Controllers
             }
 
             var user = await _authService.GetUser(model.Email, encodedPass);
+            Role role = await _authService.GetUserRole(model.Email, encodedPass);
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
             dic.Add("id", user.UserID.ToString());
             string token = _authService.GetToken(dic);
-            return Ok(new { status = PreservedStringMessage.SuccessStatus, status_code = 200, token = token });
+            return Ok(new { status = PreservedStringMessage.SuccessStatus, status_code = 200,  role=role.Name , token = token });
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ namespace DeskReservationAPI.Model
     public class UserModel
     {
 
-        [Required]
+        [Required, StringLength(50)]
         [EmailAddress]
         public string Email {  get; set; }
 
@@ -21,8 +21,9 @@ namespace DeskReservationAPI.Model
         [MaxLength(20)]
         public string Department { get; set; }
 
-        [Required]
-        [MaxLength(20)]
+        [Required(ErrorMessage = "Password is required."), StringLength(50)]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[\W_])(?=.*[a-zA-Z]).{8,}$",
+ErrorMessage = "Password must be at least 8 characters long, contain one uppercase letter and one special character.")]
         public string Password { get; set; }
 
     }
