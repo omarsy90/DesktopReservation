@@ -1,5 +1,5 @@
 import axios from "axios";
-const basiUrl = "https://localhost:7070/api";
+const basiUrl = "https://localhost:5001/api";
 
 class authenticatonService
 {

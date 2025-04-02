@@ -10,6 +10,7 @@
       <input
         type="email"
         v-model="$store.state.authentication.email"
+        @input="emailEntered"
         required
       />
      <span v-if="emailError">email is not correct</span>
@@ -19,6 +20,7 @@
       <input
         type="password"
         v-model="$store.state.authentication.password"
+        @input="passwordEntered"
         required
       />
       <span v-if="passwordError">password must have at least 8 letters ,One sign and one capital letter </span>
@@ -36,6 +38,7 @@
       </toggle>
     </div>
     <div class="login-button">
+      
       <spinner class="spinner" v-if="$store.state.isloading"> </spinner>
       <button type="sumit">Login</button>
     </div>
@@ -54,6 +57,7 @@ import ErrorItem from "./ErrorItem.vue";
 import Spinner from "./Spinner.vue";
 import Toggle from "./Toggle.vue";
 import service from "../service/strorageService.js";
+import utility from "../service/validationService.js"
 export default {
   components: {
     ErrorItem,
@@ -63,6 +67,8 @@ export default {
   data() {
     return {
       remember: false,
+      isEmailEntered : false,
+      isPassowrdEntered : false
       
     };
   },
@@ -70,7 +76,10 @@ export default {
     logIn() {
        {
         // there is no request running and email and password right wroten
-      console.log("user try login ")
+          if( this.emailError || this.passwordError)
+          {
+            return ;
+          }
         this.$store.dispatch("authentication/logIn").then((isLogged) => {
           if (isLogged) {
            let token = this.$store.getters["authentication/token"];
@@ -96,22 +105,30 @@ export default {
     changeRemeber(isCheecked) {
       this.remember = isCheecked;
     },
+    emailEntered()
+    {
+      
+      
+      this.isEmailEntered = true;
+    },
+    passwordEntered()
+    {
+        this.isPassowrdEntered = true;
+    }
   },
 
   computed: {
     emailError()
     {
       let email = this.$store.getters["authentication/email"];
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      let isValid = emailRegex.test(email);
-      return !isValid
+      let isValid = utility.validateEmail(email)
+      return !isValid && this.isEmailEntered
     } ,
     passwordError()
     {
       let pass = this.$store.getters["authentication/password"]
-      const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-      let isvalid = passwordRegex.test(pass);
-      return !isvalid
+     let isValid = utility.validatePassword(pass);
+      return !isValid && this.isPassowrdEntered
     }
 
      
@@ -122,9 +139,9 @@ export default {
 <style lang="scss" scoped>
 .spinner {
   position: absolute;
-  top: 58%;
-  left: 47%;
-  color: #d4dbea;
+  top: -20px;
+  left: -10px;
+  color: #424e69;
 }
 
 p {
@@ -187,6 +204,7 @@ form {
 
 .login-button {
   text-align: center;
+  position: relative;
 
   button {
     margin: 10px;
