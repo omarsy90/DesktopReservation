@@ -30,7 +30,7 @@ namespace DeskReservationAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer("Data Source=t-s1at1001\\Inst1;Initial Catalog=BookingDesk;Persist Security Info=True;User ID=Produktion;Password=wo7bdk;TrustServerCertificate=True"));
+            builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer("Data Source=DESKTOP-8MTNL02\\SQLEXPRESS;Initial Catalog=BookingDesk;Persist Security Info=True;User ID=omar;Password=123;TrustServerCertificate=True"));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IDeskRepository, DeskRepository>();
             builder.Services.AddScoped<IOfficeRepository,OfficeRepository>();
@@ -154,8 +154,9 @@ namespace DeskReservationAPI
 
         var app = builder.Build();
 
+            Console.WriteLine("envirment variable : "+app.Environment.EnvironmentName);
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
@@ -165,8 +166,8 @@ namespace DeskReservationAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
-       
 
+            app.MapGet("/", () =>  "welcome to restfull api for desk reservation" );
              app.MapControllers();
               
            
