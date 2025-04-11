@@ -23,26 +23,13 @@ export default {
   },
   computed: {
     getDesks() {
-      return this.$store.getters["desks/desks"];
+      return this.$store.getters["desks/getDesks"];
     },
   },
 
   mounted() {
-  
-
-    
-
-    this.$store.dispatch("desks/setDesks");
-
-    // test
-
-   
-    const payload = { 
-      from: "",
-      to: "",
-      stiege: "",
-    };
-    this.$store.dispatch("desks/felterDesks", payload);
+    this.$store.dispatch("desks/getDesks");
+ 
   },
 };
 </script>

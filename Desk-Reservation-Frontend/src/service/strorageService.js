@@ -17,6 +17,16 @@ class storageService
         return window.sessionStorage.getItem(key);
       }
 
+      getToken()
+      {
+        let token = this.getDataLocalStorage("token") 
+         if(!token)
+         {
+            token = this.getDataSessionStorage("token");
+         }
+        return token;
+      }
+
 }
 
 const storage = new storageService();

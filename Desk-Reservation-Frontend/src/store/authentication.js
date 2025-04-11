@@ -42,38 +42,31 @@ const authenticaton = {
   actions: {
     async register(context) {
       context.rootState.isloading = true;
-      const user = {
-        firstname: context.getters.firstname,
-        lastname: context.getters.lastname,
-        department: context.getters.department,
+      const newUser = {
+        firstName: context.getters.firstname,
+        lastName: context.getters.lastname,
         email: context.getters.email,
         password: context.getters.password,
+        department: context.getters.department,
       };
-      const respnse = service
-        .userRegistering(user)
+      service
+        .register(newUser)
         .then((res) => {
-          if (res.status == 204) {
+          
+          if (res.status >= 200 && res.status <= 204) 
+            {
             context.rootState.successMessage =
-              "Sie sind nun registriert und können sich einloggen";
+              "user has been successfully registered";
             context.rootState.error = "";
-            return true;
-          }
-        })
-        .catch((err) => {
-          context.rootState.successMessage = "";
-          if (String(err).match(400)) {
-            context.rootState.error = "Eines von den Felder ist ungültig !";
-            return false;
-          } else if (String(err).match(409)) {
-            context.rootState.error =
-              "Die Email-Adresse ist bereits in Verwendung !";
-            return false;
+          }else
+          {
+          context.rootState.error = res?.data?.message;
+          context.rootState.successMessage=""; 
           }
         })
         .finally(() => {
           context.rootState.isloading = false;
         });
-      return respnse;
     },
     setUserinfo(context, user) {
       context.commit("firstname", user.firstname);
@@ -95,48 +88,14 @@ const authenticaton = {
       if (response?.status === 200) {
         context.rootState.error = "";
         context.commit("token", response.data.token);
-        console.log(context.state.token);
         return true ;
-        
       } else if( response?.status === 401) {
         context.rootState.error = "email address or password not correct";
-        console.log(context.state.token);
       }
       return false;
     },
-    async getProfile(context) {
-      // payload have token and userId
-      context.rootState.isloading = true;
-      const user = await service.getUserProfile();
-      // user could be false or object
-      if (user) {
-        // user.password = payload.password
-        context.dispatch("setUserinfo", user);
-      }
-      context.rootState.isloading = false;
-    },
-    async updateProfile(context, payload) {
-      context.rootState.isloading = true;
-      const response = await service.updateProfile(
-        payload.token,
-        payload.newInfo
-      );
-      if (response == 400) {
-        context.rootState.error =
-          "Eines von Ihnen angegeben Felder ist ungültig ! ";
-        context.rootState.successMessage = "";
-      } else if (response == 409) {
-        context.rootState.error = "Die Email-Addresse ist bereits regestriert";
-        context.rootState.successMessage = "";
-      } else {
-        // set data of user in store
-        response.password = payload.newInfo.password;
-        context.dispatch("setUserinfo", response);
-        context.rootState.successMessage = "Profil würde geupdated";
-        context.rootState.error = "";
-      }
-      context.rootState.isloading = false;
-    },
+
+
   },
   getters: {
     firstname(state) {

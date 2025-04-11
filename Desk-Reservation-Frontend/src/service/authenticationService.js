@@ -1,5 +1,5 @@
 import axios from "axios";
-const basiUrl = "https://localhost:5001/api";
+const basiUrl = "http://localhost:5008/api";
 
 class authenticatonService
 {
@@ -16,13 +16,43 @@ class authenticatonService
             return res ;
           }).catch((err)=>
           {
+           
              return  err.response 
           }
           );
          
         return response ;
       }
+ 
+     async register(newUserInfo)
+      {
+       
+        const axios = require("axios");
+        let data = JSON.stringify(newUserInfo);
+  console.log(data);
+        let config = {
+          method: "post",
+          maxBodyLength: Infinity,
+          url: `${basiUrl}/User/register`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: data,
+        };
 
+    const res =  await  axios
+          .request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            return response;
+          })
+          .catch((error) => {
+            console.log(error);
+            return error.response ;
+          });
+
+        return res;
+      }
 
 }
 

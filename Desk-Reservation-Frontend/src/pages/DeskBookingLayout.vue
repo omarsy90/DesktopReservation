@@ -155,15 +155,7 @@ export default {
     this.checkScreen();
   },
 
-  mounted() {
-    this.$store.dispatch("authentication/getProfile").then(() => {
-      if (!this.$store.getters["authentication/userId"]) {
-        this.$router.push({
-          path: "/login",
-        });
-      }
-    });
-  },
+ 
   methods: {
     toggleMobileNav() {
       this.mobileNav = !this.mobileNav;
@@ -183,7 +175,7 @@ export default {
 
   computed: {
     isAdmin() {
-      return this.$store.getters["authentication/isAdmin"];
+     return false
     },
   },
 };

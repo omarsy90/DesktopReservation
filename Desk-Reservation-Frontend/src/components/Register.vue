@@ -1,6 +1,6 @@
 <template>
   <div id="regist--form" class="register-container">
-    <button class="back-button"><router-link to="/login">Zurück</router-link></button>
+    <button class="back-button"><router-link to="/login">sign in</router-link></button>
     <form @submit.prevent="register()">
     <div class="head-container">
       <h2>Registier</h2>
@@ -46,15 +46,15 @@
         <input type="password" 
         v-model="confirmPassword" 
         required />
-       
+       <span  v-if="passwordconfirmationError"  > confirmation password is not the same as password ! </span>
         </div>
       </div>
       <div class="register-button">
         <button type="submit">Registieren</button>
       </div>
       <spinner v-if="$store.state.isloading" class="spinner"> </spinner>
-      <erroritem v-else-if="$store.state.error" :msg="$store.state.error"> </erroritem>
-
+      <erroritem v-else-if="$store.state.error"  :msg="$store.state.error"> </erroritem>
+       <successitem v-else-if="$store.state.successMessage" :msg="$store.state.successMessage" />
 
     </form>
   </div>
@@ -63,83 +63,67 @@
 <script>
   import Spinner from './Spinner.vue'
   import erroritem from './ErrorItem.vue';
+  import successitem from './SuccessItem.vue' ;
   import utility from '../service/validationService.js'
   export default {
     name: "register",
     components: {
       Spinner,
       erroritem,
-      
-
+      successitem
     },
     data() {
       return {
 
-        confirmPassword: null,
+        confirmPassword: "",
         isEmailEntered : false,
-        isPasswordEntered : false,
-
-
+        isPasswordEntered : false,   
       };
     },
     methods: {
 
       register() {
-        //event.preventDefault();
-        // if (this.$store.state.isloading === false) {
-
-        //   if (!this.checkFirstname && !this.checkLastname && !this.checkdepartment && !this.checkEmail && !this
-        //     .checkTypeEmail && !this.checkpassword && !this.checkTypePassword && !this.checkConfirmPassword) {
-
-            
-        //     this.$store.dispatch('authentication/register').then(
-        //       () => {
-               
-        //         if (this.$store.state.isloading === false && this.$store.state.successMessage != '') {
-        //           this.$router.push('/login');
-        //         }
-
-        //       }
-        //     );
-         // }
-
-
-        
-
+          event.preventDefault(); 
+          
+          if(this.$store.state.isloading === false)
+          {
+            this.$store.dispatch("authentication/register")
+          }     
       },
       emailChanged(){
         this.isEmailEntered = true;
       },
        passwordChanged(){
         this.isPasswordEntered = true;
+        console.log("password changed !")
        }
      
     },
     computed: {
 
-     
-   
-
-     
-
+      
       emailError() {
        let email = this.$store.getters["authentication/email"]  ;
        let isValid = utility.validateEmail(email);
-       return !isValid && this.isEmailEntered
-       
+       return  !isValid && this.isEmailEntered
       },
-
-     
 
       passwordError() {
-
        let pass = this.$store.getters['authentication/password']  ;
         let isValid = utility.validatePassword(pass);
-        return !isValid && this.isPasswordEntered
-
+        return  !isValid && this.isPasswordEntered
       },
-
-     
+      
+      passwordconfirmationError()
+      {
+        let pass = this.$store.getters['authentication/password']  ;
+        if(this.confirmPassword != pass)
+        {
+         return  true;
+        }
+        return false
+      }
+  
     },
   };
 </script>
@@ -147,7 +131,8 @@
 <style lang="scss" scoped>
   .spinner {
     position: absolute;
-    top: 1045px;
+    top: 850px;
+    
   }
 
   span {
@@ -237,20 +222,21 @@
   }
 
   .back-button{
-    background: #A9B7D6;
+    background: none;
+    border:none;
     padding: 10px;
-    border: 3px solid #536EAD;
-    border-radius: 25px;
+    color:blue;
+    
     font-size: 18px;
     font-family: "Montserrat", regular;
-
+  text-decoration:underline;
     a{
-      color: #f3f3f3;
+      color: blue;
       text-decoration: none;
     }
 
       &:hover {
-        background: #536EAD;
+        background:rgb(140, 160, 206);
         transition: 0.5s;
       }
     }
