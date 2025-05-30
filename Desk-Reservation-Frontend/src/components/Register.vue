@@ -15,6 +15,11 @@
         <label>Last Name: <span> *</span> </label>
         <input type="text" v-model="$store.state.authentication.lastname" required />
         </div>
+
+        <div class="dev-input">
+        <label>username: <span> *</span> </label>
+        <input type="text" v-model="$store.state.authentication.username" required />
+        </div>
          
       <div class="dev-input">
         <label>Department: <span>*</span> </label>

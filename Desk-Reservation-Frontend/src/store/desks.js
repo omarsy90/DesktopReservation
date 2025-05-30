@@ -1,4 +1,3 @@
-
 import deskService from "../service/deskService";
 const desks = {
   namespaced: true,
@@ -27,11 +26,15 @@ const desks = {
     },
   },
   actions: {
-   
     async getDesks(context) {
       context.rootState.isloading = true;
-      const desks = await deskService.getAlldesks();
-      context.commit("desks", desks);
+      const res = await deskService.getAlldesks();
+      if (res.status == 200) {
+        const desks = res.data;
+
+        context.commit("desks", desks);
+      }
+
       context.rootState.isloading = false;
     },
   },
@@ -53,4 +56,4 @@ const desks = {
     },
   },
 };
-export default desks
+export default desks;

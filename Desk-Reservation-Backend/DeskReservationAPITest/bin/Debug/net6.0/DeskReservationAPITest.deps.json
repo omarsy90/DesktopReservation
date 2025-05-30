@@ -2292,7 +2292,10 @@
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
-          "DeskReservationAPI.dll": {}
+          "DeskReservationAPI.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         },
         "compile": {
           "DeskReservationAPI.dll": {}

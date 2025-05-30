@@ -5,6 +5,7 @@ const authenticaton = {
     token: "",
     firstname: "",
     lastname: "",
+    username :"",
     department: "",
     email: "",
     password: "",
@@ -19,6 +20,10 @@ const authenticaton = {
     },
     lastname(state, lastname) {
       state.lastname = lastname;
+    },
+    username(state, username){
+      state.username = username;
+
     },
     department(state, department) {
       state.department = department;
@@ -45,6 +50,7 @@ const authenticaton = {
       const newUser = {
         firstName: context.getters.firstname,
         lastName: context.getters.lastname,
+        userName: context.getters.username,
         email: context.getters.email,
         password: context.getters.password,
         department: context.getters.department,
@@ -103,6 +109,10 @@ const authenticaton = {
     },
     lastname(state) {
       return state.lastname;
+    },
+
+    username(state){
+      return state.username
     },
     department(state) {
       return state.department;

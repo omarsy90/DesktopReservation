@@ -1,10 +1,10 @@
 <template>
-    <div class="card"> 
-        <img :src="desk.map" alt="Avatar" style="width:100%" />
+    <div class="card "> 
+        <img :src="`${ApiBaseUrl}/File/${desk.Map}`" alt="Avatar" style="width:100%" />
         <div class="container">
-            <h4><b>{{desk.label}} </b></h4>
+            <h4><b>{{desk.Label}} </b></h4>
             <div class="eqipments"> 
-            <p v-for="(featre,index) in desk.equipment" :key="index" > {{featre}} </p>
+            <p v-for="(equipment,index) in desk.Equipments" :key="index" > {{equipment.Feature}} </p>
             
             </div>
         </div>
@@ -21,7 +21,13 @@
     export default {
         name: "deskitem",
         props: ['desk'],
-        computed: {},
+        computed: {
+          ApiBaseUrl()
+          {
+            console.log(`${process.env.VUE_APP_API_BASE_URL}/File/${this.desk.Map}`);
+            return process.env.VUE_APP_API_BASE_URL
+          }
+        },
         methods: {},
 
     }
@@ -38,21 +44,23 @@
 .eqipments {
     display: flex;
   p {
-    background: #A9B7D6;
+    background: green;
     color: white;
     font-size: 14px;
     margin: 5px;
-    padding: 2px;
+    padding: 5px;
     border-radius: 5px;
   }
 }
 .card {
   box-shadow: 4px 4px 5px #536ead;
   transition: 0.3s;
-  width: 250px;
+  width: 300px;
   border-radius: 5px;
   padding: 10px;
-  margin: 10px;
+  margin-top: 30px ;
+
+   ;
 }
 .card:hover {
   box-shadow: 8px 8px 10px #536ead;
@@ -81,6 +89,15 @@ flex-direction: column;
       background:#536EAD;
       transition: 0.5s;
     }
+  }
+}
+
+@media(max-width: 730px)
+{
+  .card{
+   
+    margin: 30px auto;
+    
   }
 }
 </style>

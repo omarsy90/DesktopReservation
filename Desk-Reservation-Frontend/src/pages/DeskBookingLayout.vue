@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TwoColumnLayout />
+ 
     <header :class="{ scrollednav: scrolledNav }">
       <nav>
         <h1 class="branding">Desk Booking</h1>
@@ -106,21 +106,21 @@
       }"
     >
     </router-link>
-
-    <spinner v-if="$store.state.isloading" />
+     <div class="div-load">
+         <spinner v-if="$store.state.isloading" />
     <error-item
       v-else-if="$store.state.error"
       :msg="$store.state.error"
     ></error-item>
-    <success-item
-      v-else-if="$store.state.successMessage"
-      :msg="$store.state.successMessage"
-    ></success-item>
+     </div>
+ 
 
     <router-view />
 
-    <div class="sidebar-filter">
-      <router-view name="filter" :value="5" />
+  
+
+       <div >
+      <router-view name="alldesks" :value="2" />
     </div>
   </div>
 </template>
@@ -129,16 +129,16 @@
 //import SideFilter from "../components/SideFilter.vue"
 import Spinner from "../components/Spinner.vue";
 import ErrorItem from "../components/ErrorItem.vue";
-import SuccessItem from "../components/SuccessItem.vue";
-import TwoColumnLayout from "../components/TwoColumnLayout.vue";
+
+
 
 export default {
   components: {
     //  SideFilter
     Spinner,
     ErrorItem,
-    SuccessItem,
-    TwoColumnLayout,
+    
+    
   },
   name: "navigation",
   data() {
@@ -269,6 +269,8 @@ header {
       margin-top: 0;
       top: 0;
       left: 0;
+      z-index: 1000;
+       
 
       li {
         margin-left: 0;
@@ -301,4 +303,16 @@ header {
     }
   }
 }
+.div-load{
+  
+  text-align: center;
+  position: absolute;
+   width:fit-content;
+   left: 45%;
+   top: 20%;
+   z-index: 1000;
+
+}
+
+
 </style>

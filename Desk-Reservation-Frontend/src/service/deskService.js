@@ -1,22 +1,20 @@
 import axios from "axios";
 import storageService from "./strorageService";
-const basiUrl = "http://localhost:5008/api";
+const basiUrl = process.env.VUE_APP_API_BASE_URL;
 
 class deskService {
   async getAlldesks() {
-  
-    console.log(storageService.getToken());
     const response = await axios
-      .get(`${basiUrl}/desk`, {
+      .get(`${basiUrl}/Desk`, {
         headers: {
-          authorization: storageService.getToken(),
+          authorization: "Bearer " + storageService.getToken(),
         },
       })
       .then((res) => {
         return res;
       })
       .catch((err) => {
-         return err.response;
+        return err.response;
       });
 
     return response;

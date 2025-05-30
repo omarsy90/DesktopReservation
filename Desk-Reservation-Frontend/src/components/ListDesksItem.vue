@@ -1,35 +1,37 @@
 <template>
-  <TwoColumnLayout>
-  <div class="list-desks">
+  <div class="desks-wrapper row">
+    <div class="list-desks">
       <desk-item
       v-for="deskelement in getDesks"
-      :key="deskelement.id"
+      :key="deskelement.DeskID"
       :desk="deskelement"
     >
     </desk-item>
+   
+     </div>
   </div>
-  </TwoColumnLayout>
 </template>
 
 <script>
-import TwoColumnLayout from "../components/TwoColumnLayout.vue"
+//import TwoColumnLayout from "../components/TwoColumnLayout.vue"
 import DeskItem from "./DeskItem.vue";
 
 export default {
   name: "listdesksitem",
   components: {
     DeskItem,
-    TwoColumnLayout
+  //  TwoColumnLayout
   },
   computed: {
     getDesks() {
-      return this.$store.getters["desks/getDesks"];
+      
+      console.log(this.$store.getters["desks/desks"]);
+      return this.$store.getters["desks/desks"];
     },
   },
 
   mounted() {
     this.$store.dispatch("desks/getDesks");
- 
   },
 };
 </script>
@@ -38,6 +40,15 @@ export default {
 .list-desks {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-between;;
+ flex-direction: row;
+ 
+}
+.desks-wrapper
+{
+ padding-left: 5%;
+ padding-right: 5%;
+  
+  
 }
 </style>
