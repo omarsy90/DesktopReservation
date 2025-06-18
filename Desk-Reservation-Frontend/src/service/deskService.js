@@ -22,20 +22,20 @@ class deskService {
 
   // retun desk-pbject if the request right
   // return null if request unautherized or desk with id given not found
-  async getDeskBeiId(deskId) {
+  async getDeskById(deskId) {
     const response = await axios
-      .get(`${basiUrl}/desk/${deskId}`, {
+      .get(`${basiUrl}/Desk/${deskId}`, {
         headers: {
-          Authorization: this.getToken(),
+          Authorization: "Bearer " + storageService.getToken(),
         },
       })
       .then((res) => {
         if (res) {
-          return res.data;
+          return res;
         }
       })
-      .catch(() => {
-        return null;
+      .catch((err) => {
+        return err.response;
       });
 
     return response;

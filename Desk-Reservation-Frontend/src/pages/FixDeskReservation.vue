@@ -10,10 +10,18 @@
 
         <div class="fix-container">
         <p>Bitte beachten das Fix Desk auf 3 Monate gebucht werden kann!</p>
-        <div class="fix-booking-bestätigen">
-        <input type="checkbox" checked   @change="onChange()">I want to declare this desk as my fix desk:
+            <div>
+              <label>label :</label>  <label> {{deskLabel}} </label> <br/>
+              <label>office :</label>  <label> {{officeName}} </label>  
+             </div>
+        <div>
+           <Datepicker  confirm format="YYYY-MM-DD" :disabled-date="(date) => date < new Date(Date.now())  " v-model="dateStart">
+        </Datepicker>
         </div>
-        <span v-if="!isChecked"> Sie sollen checkbox aktivieren </span>
+        <div class="fix-booking-bestätigen">
+        <input type="checkbox"    @change="onChange()"> als favourite Platz reservieren
+        </div>
+        
         <button class="forward-button" @click="book()">
           Bestätigen
         </button>
@@ -24,7 +32,8 @@
 </template>
 
 <script>
-//import Datepicker from "vue2-datepicker";
+
+import Datepicker from "vue2-datepicker"
 import "vue2-datepicker/scss/index.scss";
 import Spinner from '../components/Spinner.vue'
 import ErrorItem from '../components/ErrorItem.vue'
@@ -35,7 +44,7 @@ import NotFound from "../components/NotFound.vue";
 
 export default {
   components: {
-    //Datepicker,
+    Datepicker,
     Spinner,
     ErrorItem,
     SuccessItem ,
@@ -44,65 +53,62 @@ export default {
 
   data() {
     return {
-     
+     dateStart:"",
       isNotFound: false,
-      isChecked:true
+      isFavourited:false,
+      deskLabel : "",
+      officeName : ""
       
     };
   },
   props: ["deskId"],
 
   methods: {
-
+    
+     getDeskInfo()
+    {
+      console.log("Desk ID "+this.deskId);
+      this.$store.dispatch("deskBooking/getDeskInfo",this.deskId).then(res=>{
+         this.deskLabel = res.Label;
+         this.officeName = res.Office.Name;
+      });
+     
+    },
     onChange(){
         
-        this.isChecked = !this.isChecked ;
+        this.isFavourited = !this.isFavourited ;
     },
     book() {
-      if (this.isChecked) {
-        // booking as fix platz
-           const comment = "I want to declare this desk as my fix desk:"
-        this.$store.dispatch("booking/fixDeskBooking",comment);
-      } 
+        
+        this.$store
+        .dispatch(
+        "deskBooking/bookFixDesk",{deskId:this.deskId,dtStart:this.dateStart,isFavourited:this.isFavourited});
     },
   },
   
   computed: {
-    getDate() {
-      return this.dateStart;
-    },
-    getStatus() {
-      return this.isNotFound;
-    },
 
+   
+  
     isLoading() {
       return this.$store.getters["booking/bookingIsloading"];
     },
 
     bookingError() {
-      return this.$store.getters["booking/bookingError"];
+      return this.$store.getters["deskBooking/bookingError"];
     },
 
     successMessage() {
-      return this.$store.getters["booking/bookingSuccessMessage"];
+      return this.$store.getters["deskBooking/bookingSuccessMessage"];
     },
   },
   mounted() {
-    
-    const id = this.deskId;
-    
-    
-    
-      //intialdata for fix-reservation
-
-      this.$store.dispatch("booking/getSelectedDesk", id).then(() => {
-        if (!this.$store.getters["booking/selectedDesk"]) {
-          // desk with id given in url is not valid
-          this.isNotFound = true;
-        }
-      });   
+      this.$store.dispatch("deskBooking/reset")
   },
-
+  created(){
+    console.log("created excuted !!");
+    this.getDeskInfo();
+  }
 
 };
 </script>

@@ -268,3 +268,4 @@ C:\Users\alkanjO\OneDrive - IGRP\Desktop\projects\DesktopReservation\Desk-Reserv
 C:\Users\alkanjO\OneDrive - IGRP\Desktop\projects\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.pdb
 C:\Users\alkanjO\OneDrive - IGRP\Desktop\projects\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\DeskReservationAPI.genruntimeconfig.cache
 C:\Users\alkanjO\OneDrive - IGRP\Desktop\projects\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\ref\DeskReservationAPI.dll
+C:\Users\alkanjO\OneDrive - IGRP\Desktop\projects\DesktopReservation\Desk-Reservation-Backend\DeskReservationAPI\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt

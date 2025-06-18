@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DeskReservationAPI</name>
+    </assembly>
+    <members>
+        <member name="M:DeskReservationAPI.Controllers.CommentController.Index">
+            <summary>
+            returns all comments
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.CommentController.Index(System.Int32)">
+            <summary>
+            returns comment by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.CommentController.Index(DeskReservationAPI.Model.CommentModel)">
+            <summary>
+            create comment.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.DeskController.Index">
+            <summary>
+            retuens all desks
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.DeskController.Get(System.Int32)">
+            <summary>
+            returns desk by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.DeskController.Create(DeskReservationAPI.Model.DeskModel)">
+            <summary>
+            create Desk.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.DeskController.Update(DeskReservationAPI.Model.DeskModel)">
+            <summary>
+            update desk.
+            </summary>
+            <param name="newModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FileController.Index(System.String)">
+            <summary>
+            return file by file name if the file available to be exposed.
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FixReservationController.GetFixReservationsConfirmed">
+            <summary>
+            get user's fixReservations confirmed(accepted or rejected)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FixReservationController.GetFixReservationRequests">
+            <summary>
+            get user's fixReservation requests (not confirmed by acceptance or rejection)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FixReservationController.CreateFixReservationRequest(DeskReservationAPI.Model.ReservationModel)">
+            <summary>
+            send  fix reservation request.
+            </summary>
+            <param name="reservationModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FixReservationController.GetReservationByID(System.Int32)">
+            <summary>
+            get fix reservation by given ID
+            </summary>
+            <param name="id"></param>
+            <returns>fix reservation</returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FixReservationController.ConfirmFixReservation(System.Int32,DeskReservationAPI.Controllers.ConfirmReservationRequest)">
+            <summary>
+            confirm fix reservation with true or false . this endpoint intends to be used for admin rule.
+            </summary>
+            <param name="reservationID"></param>
+            <param name="confRequest"></param>
+            <returns>reservation  confirmed</returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FixReservationController.GetAllFixReservationRequests">
+            <summary>
+            get all fix resevation that not confirmed( accepted or rejected) for all user .this endpoint intends to be used for admin rule
+            </summary>
+            <returns> all fix reservation requests</returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FlexReservationController.GetFlexReservation">
+            <summary>
+            returns user's flex reservations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FlexReservationController.CreateNewFlexReservation(DeskReservationAPI.Model.FlexReservationModel)">
+            <summary>
+            create  flex reservation
+            </summary>
+            <param name="reservationModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FlexReservationController.GetReservationByID(System.Int32)">
+            <summary>
+            returns flex reservation by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.FlexReservationController.DeleteFlexReservation(System.Int32)">
+            <summary>
+            remove flex reservation by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.UserController.Login(DeskReservationAPI.Model.LoginModel)">
+            <summary>
+            login registered user.
+            for test purpose : (email =user@gmail.com , password=User111$ ) .
+            for admin  (email =admin@gmail.com , password =adminUser$  )
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.UserController.Register(DeskReservationAPI.Model.RegisterModel)">
+            <summary>
+            register new user
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeskReservationAPI.Controllers.UserController.GetUser(System.String)">
+            <summary>
+            returns user by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.FixRelationMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.FixRelationMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.FixRelationMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.FixRelationMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.SeedCommentsMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.SeedCommentsMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.SeedCommentsMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.SeedCommentsMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.AddUser3Migration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddUser3Migration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddUser3Migration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddUser3Migration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.AddIdForUser3Migration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddIdForUser3Migration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddIdForUser3Migration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.AddIdForUser3Migration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.chaangeUserPassMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.chaangeUserPassMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.chaangeUserPassMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.chaangeUserPassMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:DeskReservationAPI.Migrations.changeUserPasswordsMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.changeUserPasswordsMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.changeUserPasswordsMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:DeskReservationAPI.Migrations.changeUserPasswordsMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

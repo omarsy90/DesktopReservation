@@ -106,37 +106,28 @@
       }"
     >
     </router-link>
-     <div class="div-load">
-         <spinner v-if="$store.state.isloading" />
-    <error-item
-      v-else-if="$store.state.error"
-      :msg="$store.state.error"
-    ></error-item>
-     </div>
+    
  
 
     <router-view />
-
-  
-
        <div >
-      <router-view name="alldesks" :value="2" />
+      
     </div>
   </div>
 </template>
 
 <script>
 //import SideFilter from "../components/SideFilter.vue"
-import Spinner from "../components/Spinner.vue";
-import ErrorItem from "../components/ErrorItem.vue";
+//import Spinner from "../components/Spinner.vue";
+//import ErrorItem from "../components/ErrorItem.vue";
 
 
 
 export default {
   components: {
     //  SideFilter
-    Spinner,
-    ErrorItem,
+    //Spinner,
+    //ErrorItem,
     
     
   },

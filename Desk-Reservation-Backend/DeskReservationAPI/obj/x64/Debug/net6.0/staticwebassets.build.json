@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "FhbueeWq+FVSr5OYSGzGfrk8cYze2ggPDB4EDSHkr7M=",
+  "Source": "DeskReservationAPI",
+  "BasePath": "_content/DeskReservationAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

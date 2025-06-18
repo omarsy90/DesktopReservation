@@ -9,8 +9,8 @@
             </div>
         </div>
         <div class="button-container">
-          <router-link :to="{name:'fixdeskreservation',params:{deskId:desk.id}} " class="button">Fix Reservierung </router-link>
-          <router-link :to="{name:'flexdeskreservation',params:{deskId:desk.id}} " class="button">Flex Reservierung </router-link>
+          <router-link :to="{name:'fixdeskreservation',params:{deskId:desk.DeskID}} " class="button">Fix Reservierung </router-link>
+          <router-link :to="{name:'flexdeskreservation',params:{deskId:desk.DeskID}} " class="button">Flex Reservierung </router-link>
         </div>    
     </div>
 </template>
@@ -24,7 +24,7 @@
         computed: {
           ApiBaseUrl()
           {
-            console.log(`${process.env.VUE_APP_API_BASE_URL}/File/${this.desk.Map}`);
+           // console.log(`${process.env.VUE_APP_API_BASE_URL}/File/${this.desk.Map}`);
             return process.env.VUE_APP_API_BASE_URL
           }
         },

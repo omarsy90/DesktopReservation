@@ -30,7 +30,7 @@ namespace DeskReservationAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer("Data Source=t-Test\\Inst1;Initial Catalog=BookingDesk;Persist Security Info=True;User ID=;Password=;TrustServerCertificate=True"));
+            builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer("Data Source=t-S1AT1001\\Inst1;Initial Catalog=BookingDesk;Persist Security Info=True;User ID=Produktion;Password=wo7bdk;TrustServerCertificate=True"));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IDeskRepository, DeskRepository>();
             builder.Services.AddScoped<IOfficeRepository,OfficeRepository>();

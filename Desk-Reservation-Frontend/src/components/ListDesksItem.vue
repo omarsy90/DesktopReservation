@@ -25,7 +25,7 @@ export default {
   computed: {
     getDesks() {
       
-      console.log(this.$store.getters["desks/desks"]);
+     
       return this.$store.getters["desks/desks"];
     },
   },
@@ -51,4 +51,6 @@ export default {
   
   
 }
+
+
 </style>
